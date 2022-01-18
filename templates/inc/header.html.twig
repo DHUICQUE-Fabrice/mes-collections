@@ -1,0 +1,34 @@
+<header class="p-3 mb-3 border-bottom bg-primary">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+            <a class="navbar-brand text-secondary" href="/">Mes Collections</a>
+            <div class="col-2"></div>
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ asset('img/icons/profile.png') }}" alt="Profil" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownMenu">
+                    <li><a class="dropdown-item" href="#">Se connecter</a></li>
+                    <li><a class="dropdown-item" href="#">S'inscrire</a></li>
+                </ul>
+            </div>
+            <div class="col-2"></div>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Rechercher">
+            </form>
+            <button><img src="{{ asset('img/icons/search-icon.png') }}" alt="rechercher" width="32" height="32"></button>
+            <div class="col-2"></div>
+
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ asset('img/icons/menu-icon.png') }}" alt="Menu" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownMenu">
+                    <li><a class="dropdown-item" href="#">Petshop</a></li>
+                    <li><a class="dropdown-item" href="#">Schleich</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
