@@ -4,39 +4,98 @@ namespace App\Entity;
 
 use App\Repository\SchleichRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass=SchleichRepository::class)
  */
-class HorseSchleich extends CollectibleItem
+class HorseSchleich
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $biography;
+    private string $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseType::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $type;
+    private HorseType $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseCoat::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $coat;
+    private HorseCoat $coat;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseSpecies::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $species;
+    private HorseSpecies $species;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="horseSchleiches")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
 
     public function getName(): ?string
     {
@@ -98,5 +157,21 @@ class HorseSchleich extends CollectibleItem
         return $this;
     }
 
+    public function getSlug(): string
+    {
+        return (new Slugify())->slugify($this->name);
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
 }

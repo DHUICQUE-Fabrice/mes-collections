@@ -4,12 +4,31 @@ namespace App\Entity;
 
 use App\Repository\PetshopRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass=PetshopRepository::class)
  */
-class Petshop extends CollectibleItem
+class Petshop
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -31,6 +50,46 @@ class Petshop extends CollectibleItem
      * @ORM\JoinColumn(nullable=false)
      */
     private $species;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="petshops")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
 
     public function getName(): ?string
     {
@@ -79,5 +138,23 @@ class Petshop extends CollectibleItem
 
         return $this;
     }
+
+    public function getSlug(): string
+    {
+        return (new Slugify())->slugify($this->name);
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 
 }

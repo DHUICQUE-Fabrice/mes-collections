@@ -13,7 +13,6 @@ use App\Entity\User;
 use App\Repository\HorseCoatRepository;
 use App\Repository\HorseSpeciesRepository;
 use App\Repository\HorseTypeRepository;
-use App\Repository\PetRepository;
 use App\Repository\PetshopSizeRepository;
 use App\Repository\PetshopSpeciesRepository;
 use App\Repository\UserRepository;
@@ -22,6 +21,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
@@ -32,6 +32,7 @@ class AppFixtures extends Fixture
     private HorseCoatRepository $horseCoatRepository;
     private HorseTypeRepository $horseTypeRepository;
     private HorseSpeciesRepository $horseSpeciesRepository;
+    protected $slugger;
 
 
     public function __construct(UserPasswordHasherInterface $encoder,
@@ -128,8 +129,8 @@ class AppFixtures extends Fixture
                 ->setSpecies($faker->randomElement($species))
                 ->setSize($faker->randomElement($sizes))
                 ->setPicture($faker->imageUrl(300,200))
-                ->setSlug($petshop->getName())
                 ->setCreatedAt($faker->dateTimeBetween($petshop->getUser()->getRegisteredAt(), 'now'));
+
             $manager->persist($petshop);
         }
     }
@@ -173,7 +174,6 @@ class AppFixtures extends Fixture
                 ->setCoat($faker->randomElement($coats))
                 ->setType($faker->randomElement($types))
                 ->setPicture($faker->imageUrl(300,200))
-                ->setSlug($schleich->getName())
                 ->setCreatedAt($faker->dateTimeBetween($schleich->getUser()->getRegisteredAt(), 'now'));
             $manager->persist($schleich);
         }

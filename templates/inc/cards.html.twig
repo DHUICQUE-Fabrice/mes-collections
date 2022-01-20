@@ -1,17 +1,25 @@
+
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-black">
-    <a href="{{ path('accueil') }}" title="{{ item.name }}">
+
         <div class="card-flyer">
             <div class="text-box">
                 <div class="image-box">
-                    <img src="{{ item.picture }}" alt="{{ item.name }}" />
+                    {% if thisClass == "petshop" %}
+                    <a href="{{ path('petshop_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
+                        {% else %}
+                        <a href="{{ path('horse_schleich_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
+                            {% endif %}
+                            <img src="{{ item.picture }}" alt="{{ item.name }}" />
+                        </a>
                 </div>
                 <div class="text-container">
                     <h6>{{ item.name }}</h6>
+                    Propriétaire : <a href="{{ path('profile', {nickname: item.user.nickname}) }}" class="nav-link" title="{{ item.user.nickname }}">{{ item.user.nickname }}</a>
                     <p>{{ item.biography }}</p>
                 </div>
             </div>
         </div>
-    </a>
+
 </div>
 
 

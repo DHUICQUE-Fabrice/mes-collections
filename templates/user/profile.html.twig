@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ user.avatar }}
+    <p>{{ user.nickname }} a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
+    {% set items = user.horseSchleiches | merge(user.petshops)  %}
+<div id="cards_landscape_wrap-2">
+    <div class="container">
+        <div class="row">
+            {% for item in items %}
+                {% if item in user.petshops %}
+                {% set thisClass='petshop' %}
+                {% else %}
+                    {% set thisClass='horse_schleich' %}
+                    {% endif %}
+                {% include 'inc/cards.html.twig' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block title %}
+{{ user.nickname }}
+{% endblock %}
+

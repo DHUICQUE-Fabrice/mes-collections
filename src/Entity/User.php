@@ -60,19 +60,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar;
 
     /**
-     * @ORM\OneToMany(targetEntity=CollectibleItem::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
      */
-    private $items;
+    private $petshops;
 
     /**
-     * @ORM\OneToMany(targetEntity=CollectibleItem::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="user")
      */
-    private $collectibleItems;
+    private $horseSchleiches;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
-        $this->collectibleItems = new ArrayCollection();
+        $this->petshops = new ArrayCollection();
+        $this->horseSchleiches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,29 +213,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|CollectibleItem[]
+     * @return Collection|Petshop[]
      */
-    public function getItems(): Collection
+    public function getPetshops(): Collection
     {
-        return $this->items;
+        return $this->petshops;
     }
 
-    public function addItem(CollectibleItem $item): self
+    public function addPetshop(Petshop $petshop): self
     {
-        if (!$this->items->contains($item)) {
-            $this->items[] = $item;
-            $item->setUser($this);
+        if (!$this->petshops->contains($petshop)) {
+            $this->petshops[] = $petshop;
+            $petshop->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeItem(CollectibleItem $item): self
+    public function removePetshop(Petshop $petshop): self
     {
-        if ($this->items->removeElement($item)) {
+        if ($this->petshops->removeElement($petshop)) {
             // set the owning side to null (unless already changed)
-            if ($item->getUser() === $this) {
-                $item->setUser(null);
+            if ($petshop->getUser() === $this) {
+                $petshop->setUser(null);
             }
         }
 
@@ -243,32 +243,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|CollectibleItem[]
+     * @return Collection|HorseSchleich[]
      */
-    public function getCollectibleItems(): Collection
+    public function getHorseSchleiches(): Collection
     {
-        return $this->collectibleItems;
+        return $this->horseSchleiches;
     }
 
-    public function addCollectibleItem(CollectibleItem $collectibleItem): self
+    public function addHorseSchleich(HorseSchleich $horseSchleich): self
     {
-        if (!$this->collectibleItems->contains($collectibleItem)) {
-            $this->collectibleItems[] = $collectibleItem;
-            $collectibleItem->setUser($this);
+        if (!$this->horseSchleiches->contains($horseSchleich)) {
+            $this->horseSchleiches[] = $horseSchleich;
+            $horseSchleich->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCollectibleItem(CollectibleItem $collectibleItem): self
+    public function removeHorseSchleich(HorseSchleich $horseSchleich): self
     {
-        if ($this->collectibleItems->removeElement($collectibleItem)) {
+        if ($this->horseSchleiches->removeElement($horseSchleich)) {
             // set the owning side to null (unless already changed)
-            if ($collectibleItem->getUser() === $this) {
-                $collectibleItem->setUser(null);
+            if ($horseSchleich->getUser() === $this) {
+                $horseSchleich->setUser(null);
             }
         }
 
         return $this;
     }
+
 }

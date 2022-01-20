@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ petshop.name }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="card-flyer">
+        <div class="text-box">
+            <div class="image-box">
+                <img src="{{ petshop.picture }}" alt="{{ petshop.name }}" />
+            </div>
+            <div class="text-container">
+                <h6>{{ petshop.name }}</h6>
+                <p>{{ petshop.biography }}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
