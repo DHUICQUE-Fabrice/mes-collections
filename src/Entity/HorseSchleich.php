@@ -38,7 +38,6 @@ class HorseSchleich extends CollectibleItem
      */
     private $species;
 
-
     public function getName(): ?string
     {
         return $this->name;

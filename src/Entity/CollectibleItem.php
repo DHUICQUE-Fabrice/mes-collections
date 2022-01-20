@@ -39,7 +39,10 @@ abstract class CollectibleItem
      */
     private $user;
 
-
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
 
     public function getId(): ?int
     {

@@ -11,6 +11,10 @@
         </div>
     </div>
 </div>
+<div class="d-flex justify-content-center">
+    {% do petshops.setPageRange(4) %}
+    {{ knp_pagination_render(petshops, 'inc/pagination.html.twig') }}
+</div>
 {% endblock %}
 
 {% block title %}
