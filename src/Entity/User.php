@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $about;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $registeredAt;
 
@@ -64,9 +64,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $items;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CollectibleItem::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $collectibleItems;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->collectibleItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,12 +188,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRegisteredAt(): ?\DateTimeImmutable
+    public function getRegisteredAt(): ?\DateTime
     {
         return $this->registeredAt;
     }
 
-    public function setRegisteredAt(\DateTimeImmutable $registeredAt): self
+    public function setRegisteredAt(\DateTime $registeredAt): self
     {
         $this->registeredAt = $registeredAt;
 
@@ -230,6 +236,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($item->getUser() === $this) {
                 $item->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CollectibleItem[]
+     */
+    public function getCollectibleItems(): Collection
+    {
+        return $this->collectibleItems;
+    }
+
+    public function addCollectibleItem(CollectibleItem $collectibleItem): self
+    {
+        if (!$this->collectibleItems->contains($collectibleItem)) {
+            $this->collectibleItems[] = $collectibleItem;
+            $collectibleItem->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollectibleItem(CollectibleItem $collectibleItem): self
+    {
+        if ($this->collectibleItems->removeElement($collectibleItem)) {
+            // set the owning side to null (unless already changed)
+            if ($collectibleItem->getUser() === $this) {
+                $collectibleItem->setUser(null);
             }
         }
 

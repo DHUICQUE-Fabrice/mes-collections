@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Entity;
 
 use App\Entity\PetshopSpecies;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method PetshopSpecies[]    findAll()
  * @method PetshopSpecies[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PetRepository extends ServiceEntityRepository
+class PetshopSpeciesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -20,7 +20,7 @@ class PetRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Pet[] Returns an array of Pet objects
+    //  * @return PetshopSpecies[] Returns an array of PetshopSpecies objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PetRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Pet
+    public function findOneBySomeField($value): ?PetshopSpecies
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

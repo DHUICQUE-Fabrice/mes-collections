@@ -3,3 +3,42 @@
 {% block title %}Accueil
 {% endblock %}
 
+{% block body %}
+    <h1 class="text-center">Les collections</h1>
+    <div id="cards_landscape_wrap-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 text-black">
+                    <a href="{{ path('petshops') }}" title="Petshops">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="https://picsum.photos/300/200" alt="Les petshops" />
+                                </div>
+                                <div class="text-container">
+                                    <h6>Les petshops</h6>
+                                    <p>Voir les Petshops enregistrés sur le site</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-6 text-black">
+                    <a href="{{ path('horse_schleich') }}" title="Les chevaux Schleich">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="https://picsum.photos/300/200" alt="Les chevaux Schleich" />
+                                </div>
+                                <div class="text-container">
+                                    <h6>Les chevaux Schleich</h6>
+                                    <p>Voir les chevaux Schleich enregistrés sur le site</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PetRepository::class)
+ * @ORM\Entity(repositoryClass=PetshopSpeciesRepository::class)
  */
 class PetshopSpecies
 {

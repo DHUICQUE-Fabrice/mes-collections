@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1 class="text-center">Les Petshops</h1>
+<div id="cards_landscape_wrap-2">
+    <div class="container">
+        <div class="row">
+            {% for item in petshops %}
+                {% include 'inc/cards.html.twig' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block title %}
+    Les Petshops
+{% endblock %}
+

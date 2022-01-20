@@ -6,8 +6,9 @@ use App\Repository\CollectibleItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CollectibleItemRepository::class)
+ * @ORM\MappedSuperclass
  */
+
 abstract class CollectibleItem
 {
     /**
@@ -18,7 +19,7 @@ abstract class CollectibleItem
     private $id;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -33,22 +34,24 @@ abstract class CollectibleItem
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="items")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="collectibleItems")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -90,4 +93,6 @@ abstract class CollectibleItem
 
         return $this;
     }
+
+
 }

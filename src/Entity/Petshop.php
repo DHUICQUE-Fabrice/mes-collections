@@ -32,6 +32,7 @@ class Petshop extends CollectibleItem
      */
     private $species;
 
+
     public function getName(): ?string
     {
         return $this->name;
@@ -79,4 +80,5 @@ class Petshop extends CollectibleItem
 
         return $this;
     }
+
 }

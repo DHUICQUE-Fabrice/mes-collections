@@ -98,4 +98,6 @@ class HorseSchleich extends CollectibleItem
 
         return $this;
     }
+
+
 }
