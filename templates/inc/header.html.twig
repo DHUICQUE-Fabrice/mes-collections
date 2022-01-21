@@ -4,7 +4,7 @@
 
             <a class="navbar-brand text-white" href="/">Mes Collections</a>
             <div class="col-2">
-                <a href="{{ path('create_new') }}" class="d-block link-dark text-decoration-none" aria-expanded="false">
+                <a href="{{ path('create_new') }}" class="d-block link-dark text-decoration-none" aria-expanded="false" title="Nouveau">
                     <img src="{{ asset('img/icons/plusbutton.png') }}" alt="Nouveau" width="32" height="32" class="rounded-circle">
                 </a>
             </div>
@@ -25,7 +25,9 @@
                     {% endif %}
                 </ul>
             </div>
-            <div class="col-2"></div>
+            <div class="col-2">
+                <a href="{{ path('contact') }}" title="Contact" class="d-block link-dark text-decoration-none" aria-expanded="false">Contact</a>
+            </div>
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Rechercher">
             </form>
@@ -41,6 +43,7 @@
                     <li><a class="dropdown-item" href="{{ path('horse_schleich')}}">Schleich</a></li>
                 </ul>
             </div>
+
         </div>
     </div>
 </header>

@@ -16,10 +16,11 @@
                     <div class="col-md-4">
                         <h3>Plan du site</h3>
                         <ul>
-                            <li><a class="text-white" href="{{ path('accueil') }}">Accueil</a></li>
-                            <li><a class="text-white" href="{{ path('app_login') }}">Se connecter</a></li>
-                            <li><a class="text-white" href="{{ path('app_register') }}">S'inscrire</a></li>
-                            <li><a class="text-white" href="#">Mon profil</a></li>
+                            <li><a class="text-white" title="Accueil" href="{{ path('accueil') }}">Accueil</a></li>
+                            <li><a class="text-white" title="Se connecter" href="{{ path('app_login') }}">Se connecter</a></li>
+                            <li><a class="text-white" title="Créer un compte" href="{{ path('app_register') }}">S'inscrire</a></li>
+                            <li><a class="text-white" title="Voir mon profil" href="#">Mon profil</a></li>
+                            <li><a href="{{ path('contact') }}" class="text-white" title="Contact">Contact</a></li>
                         </ul>
                     </div>
                 </div>
