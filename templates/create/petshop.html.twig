@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+{{ parent() }} | Nouveau Petshop
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        {{ form_start(petshopForm) }}
+        {{ form_widget(petshopForm) }}
+        <div class="row">
+            <div class="col-9"></div>
+            <button class="btn btn-primary">Valider</button>
+        </div>
+        {{ form_end(petshopForm) }}
+
+    </div>
+{% endblock %}
+
+

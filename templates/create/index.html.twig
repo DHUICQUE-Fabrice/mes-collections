@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block title  %}
+    {{ parent() }} | Nouveau
+{% endblock %}
+{% block body %}
+    <h1 class="text-center">Que voulez-vous ajouter à votre collection ?</h1>
+    <div id="cards_landscape_wrap-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-lg-4 text-black">
+                    <a href="{{ path('create_new_petshop') }}" title="Nouveau Petshop">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="https://picsum.photos/300/200" alt="Nouveau Petshop" />
+                                </div>
+                                <div class="text-container">
+                                    <h6>Petshop</h6>
+                                    <p>Ajouter un Petshop à votre collection</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-4 text-black">
+                    <a href="" title="Nouveau cheval Schleich">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="https://picsum.photos/300/200" alt="Nouveau cheval Schleich" />
+                                </div>
+                                <div class="text-container">
+                                    <h6>Cheval Schleich</h6>
+                                    <p>Ajouter un cheval Schleich à votre collection</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-4 text-black">
+                    <a href="" title="Contactez-moi !">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="https://picsum.photos/300/200" alt="Autre" />
+                                </div>
+                                <div class="text-container">
+                                    <h6>Autre</h6>
+                                    <p>Vous voulez un autre type de collection ? Contactez-moi !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

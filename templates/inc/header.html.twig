@@ -3,7 +3,11 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
             <a class="navbar-brand text-white" href="/">Mes Collections</a>
-            <div class="col-2"></div>
+            <div class="col-2">
+                <a href="{{ path('create_new') }}" class="d-block link-dark text-decoration-none" aria-expanded="false">
+                    <img src="{{ asset('img/icons/plusbutton.png') }}" alt="Nouveau" width="32" height="32" class="rounded-circle">
+                </a>
+            </div>
             <div class="dropdown text-end">
                 {% if app.user %}
                 <a href="#" class="d-inline nav-link text-white" >{{ app.user.nickname }}</a>

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ObjectFamilyRepository;
 use App\Repository\PetshopRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
