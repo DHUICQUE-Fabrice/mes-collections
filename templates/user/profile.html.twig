@@ -5,7 +5,6 @@
 {% block body %}
 {{ user.avatar }}
     <p>{{ user.nickname }} a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
-    {% set items = user.horseSchleiches | merge(user.petshops)  %}
 <div id="cards_landscape_wrap-2">
     <div class="container">
         <div class="row">
@@ -20,7 +19,10 @@
         </div>
     </div>
 </div>
-
+    <div class="d-flex justify-content-center">
+        {% do items.setPageRange(4) %}
+        {{ knp_pagination_render(items, 'inc/pagination.html.twig') }}
+    </div>
 
 {% endblock %}
 
