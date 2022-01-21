@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Se connecter{% endblock %}
+{% block title  %}
+{{ parent() }} | Se connecter
+{% endblock %}
 
 {% block body %}
-<form method="post">
+<form method="post" class="col-md-6">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
-
 
     <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
     <label for="inputNickname">Pseudo : </label>
@@ -16,9 +15,7 @@
     <label for="inputPassword">Mot de passe : </label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div class="checkbox mb-3">
             <label>

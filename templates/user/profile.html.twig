@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block title  %}
+    {{ parent() }} | {{ user.nickname }}
+{% endblock %}
 {% block body %}
 {{ user.avatar }}
     <p>{{ user.nickname }} a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
@@ -22,7 +24,5 @@
 
 {% endblock %}
 
-{% block title %}
-{{ user.nickname }}
-{% endblock %}
+
 

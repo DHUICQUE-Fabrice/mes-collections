@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Petshop;
 use App\Repository\PetshopRepository;
 use App\Services\PaginatorService;
 use Doctrine\Persistence\ObjectManager;
@@ -34,10 +35,17 @@ class PetshopsController extends AbstractController
 
     /**
      * @Route ("/petshop/details/{slug}-{id}", name="petshop_details", requirements={"id"="\d+", "slug": "[a-z0-9\-]*"})
+     * @param Petshop $petshop
      */
-    public function details(string $slug, int $id)
+    public function details(Petshop $petshop, string $slug): Response
     {
-        $petshop= $this->repository->find($id);
+        $currentSlug = $petshop->getSlug();
+        if($currentSlug !== $slug) {
+            return $this->redirectToRoute('petshop_details', [
+                'id' => $petshop->getId(),
+                'slug' => $currentSlug
+            ], 301);
+        }
         return $this->render('petshops/details.html.twig', [
             'petshop' => $petshop
         ]);

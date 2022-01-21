@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\HorseSchleich;
 use App\Repository\HorseSchleichRepository;
 use App\Services\PaginatorService;
 use Doctrine\Persistence\ObjectManager;
@@ -33,12 +34,19 @@ class HorseSchleichController extends AbstractController
 
     /**
      * @Route ("/schleich/details/{slug}-{id}", name="horse_schleich_details", requirements={"id"="\d+"})
+     * @param HorseSchleich $horseSchleich
      */
-    public function details(string $slug, int $id)
+    public function details(HorseSchleich $horseSchleich, string $slug)
     {
-        $schleich = $this->repository->find($id);
+        $currentSlug = $horseSchleich->getSlug();
+        if($currentSlug !== $slug){
+            return $this->redirectToRoute('horse_schleich_details', [
+                'id' => $horseSchleich->getId(),
+                'slug' => $currentSlug
+            ], 301);
+        }
         return $this->render('horse_schleich/details.html.twig', [
-            'schleich' => $schleich
+            'schleich' => $horseSchleich
        ]);
 
     }

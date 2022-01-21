@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}
-{{ schleich.name }}
+{% block title  %}
+    {{ parent() }} | {{ schleich.name }}
 {% endblock %}
-
 {% block body %}
     <div class="card-flyer">
         <div class="text-box">

@@ -57,6 +57,13 @@ class Petshop
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ObjectFamily::class, inversedBy="petshop")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $objectFamily;
+
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -155,6 +162,20 @@ class Petshop
 
         return $this;
     }
+
+    public function getObjectFamily(): ?ObjectFamily
+    {
+        return $this->objectFamily;
+    }
+
+    public function setObjectFamily(?ObjectFamily $objectFamily): self
+    {
+        $this->objectFamily = $objectFamily;
+
+        return $this;
+    }
+
+
 
 
 }

@@ -6,6 +6,7 @@ use App\Entity\HorseCoat;
 use App\Entity\HorseSchleich;
 use App\Entity\HorseSpecies;
 use App\Entity\HorseType;
+use App\Entity\ObjectFamily;
 use App\Entity\Petshop;
 use App\Entity\PetshopSize;
 use App\Entity\PetshopSpecies;
@@ -13,6 +14,7 @@ use App\Entity\User;
 use App\Repository\HorseCoatRepository;
 use App\Repository\HorseSpeciesRepository;
 use App\Repository\HorseTypeRepository;
+use App\Repository\ObjectFamilyRepository;
 use App\Repository\PetshopSizeRepository;
 use App\Repository\PetshopSpeciesRepository;
 use App\Repository\UserRepository;
@@ -21,7 +23,6 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
@@ -32,6 +33,7 @@ class AppFixtures extends Fixture
     private HorseCoatRepository $horseCoatRepository;
     private HorseTypeRepository $horseTypeRepository;
     private HorseSpeciesRepository $horseSpeciesRepository;
+    private ObjectFamilyRepository $objectFamilyRepository;
     protected $slugger;
 
 
@@ -41,7 +43,8 @@ class AppFixtures extends Fixture
                                 PetshopSpeciesRepository $petshopSpeciesRepository,
                                 HorseCoatRepository $horseCoatRepository,
                                 HorseTypeRepository $horseTypeRepository,
-                                HorseSpeciesRepository $horseSpeciesRepository
+                                HorseSpeciesRepository $horseSpeciesRepository,
+                                ObjectFamilyRepository $objectFamilyRepository
                                 )
     {
         $this->encoder = $encoder;
@@ -51,6 +54,7 @@ class AppFixtures extends Fixture
         $this->horseCoatRepository = $horseCoatRepository;
         $this->horseTypeRepository = $horseTypeRepository;
         $this->horseSpeciesRepository = $horseSpeciesRepository;
+        $this->objectFamilyRepository = $objectFamilyRepository;
     }
 
     public function load(ObjectManager $manager): void
@@ -67,6 +71,15 @@ class AppFixtures extends Fixture
 
         $this->makeUsers($faker,$manager);
         $manager->flush();
+
+        $objectFamilyPetshop = new ObjectFamily();
+        $objectFamilyPetshop->setName('Petshop');
+        $manager->persist($objectFamilyPetshop);
+        $objectFamilySchleich = new ObjectFamily();
+        $objectFamilySchleich->setName('HorseSchleich');
+        $manager->persist($objectFamilySchleich);
+        $manager->flush();
+
 
         $this->makePetshopSpecies($faker,$manager);
         $manager->flush();
@@ -121,6 +134,7 @@ class AppFixtures extends Fixture
         $users = $this->userRepository->findAll();
         $sizes = $this->petshopSizeRepository->findAll();
         $species = $this->petshopSpeciesRepository->findAll();
+        $objectFamily = $this->objectFamilyRepository->findOneBy(['name'=>'Petshop']);
         for($i=0;$i<200;$i++){
             $petshop = new Petshop();
             $petshop->setName($faker->firstName())
@@ -129,7 +143,9 @@ class AppFixtures extends Fixture
                 ->setSpecies($faker->randomElement($species))
                 ->setSize($faker->randomElement($sizes))
                 ->setPicture($faker->imageUrl(300,200))
-                ->setCreatedAt($faker->dateTimeBetween($petshop->getUser()->getRegisteredAt(), 'now'));
+                ->setCreatedAt($faker->dateTimeBetween($petshop->getUser()->getRegisteredAt(), 'now'))
+                ->setObjectFamily($objectFamily);
+                ;
 
             $manager->persist($petshop);
         }
@@ -164,6 +180,7 @@ class AppFixtures extends Fixture
         $coats = $this->horseCoatRepository->findAll();
         $types = $this->horseTypeRepository->findAll();
         $species = $this->horseSpeciesRepository->findAll();
+        $objectFamily = $this->objectFamilyRepository->findOneBy(['name'=>'HorseSchleich']);
 
         for($i=0;$i<200;$i++){
             $schleich = new HorseSchleich();
@@ -174,7 +191,9 @@ class AppFixtures extends Fixture
                 ->setCoat($faker->randomElement($coats))
                 ->setType($faker->randomElement($types))
                 ->setPicture($faker->imageUrl(300,200))
-                ->setCreatedAt($faker->dateTimeBetween($schleich->getUser()->getRegisteredAt(), 'now'));
+                ->setCreatedAt($faker->dateTimeBetween($schleich->getUser()->getRegisteredAt(), 'now'))
+                ->setObjectFamily($objectFamily)
+                ;
             $manager->persist($schleich);
         }
     }
