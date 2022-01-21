@@ -15,7 +15,7 @@
                 <div class="text-container">
                     <h6>{{ item.name }}</h6>
                     Propriétaire : <a href="{{ path('profile', {nickname: item.user.nickname}) }}" class="nav-link" title="{{ item.user.nickname }}">{{ item.user.nickname }}</a>
-                    <p>{{ item.biography }}</p>
+                    <p>{{ item.biography | u.truncate(50, '...', false) }}</p>
                 </div>
             </div>
         </div>
