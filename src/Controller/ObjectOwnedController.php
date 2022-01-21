@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\HorseSchleich;
 use App\Entity\Petshop;
 use App\Entity\User;
+use App\Form\HorseSchleichType;
 use App\Form\PetshopType;
 use App\Repository\ObjectFamilyRepository;
 use App\Repository\UserRepository;
@@ -51,6 +53,36 @@ class ObjectOwnedController extends AbstractController
         }
         return $this->render('create/petshop.html.twig', [
             'petshopForm'=>$petshopForm->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/nouveau/cheval-schleich", name="create_new_horseSchleich")
+     */
+    public function createNewHorseSchleich(EntityManagerInterface $entityManager,
+                                     Request $request,
+                                     ObjectFamilyRepository $objectFamilyRepository
+    ): Response
+    {
+        /** @var $user User */
+        $user = $this->getUser();
+        $family = $objectFamilyRepository->findOneBy(['name'=>'HorseSchleich']);
+        $horseSchleich = new HorseSchleich();
+        $horseSchleich->setUser($user)
+            ->setObjectFamily($family);
+
+        $horseSchleichForm = $this->createForm(HorseSchleichType::class, $horseSchleich);
+
+        $horseSchleichForm->handleRequest($request);
+        if ($horseSchleichForm->isSubmitted() && $horseSchleichForm->isValid()){
+            $entityManager->persist($horseSchleich);
+            $entityManager->flush();
+            $this->addFlash('success', $horseSchleich->getName() . ' a bien été ajouté !');
+            return $this->redirectToRoute('horse_schleich_details', ['id'=>$horseSchleich->getId(), 'slug'=>$horseSchleich->getSlug()]);
+        }
+        return $this->render('create/horseschleich.html.twig', [
+            'horseSchleichForm'=>$horseSchleichForm->createView()
         ]);
     }
 }

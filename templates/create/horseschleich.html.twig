@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} | Nouveau Cheval Schleich
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        {{ form_start(horseSchleichForm) }}
+        {{ form_widget(horseSchleichForm) }}
+        <div class="row">
+            <div class="col-9"></div>
+            <button class="btn btn-primary">Valider</button>
+        </div>
+        {{ form_end(horseSchleichForm) }}
+
+    </div>
+{% endblock %}
+
+
