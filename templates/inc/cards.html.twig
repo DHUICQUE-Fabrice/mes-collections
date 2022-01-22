@@ -6,7 +6,7 @@
                 <div class="image-box">
                     {% if thisClass == "petshop" %}
                     <a href="{{ path('petshop_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
-                        {% else %}
+                        {% elseif thisClass == "horse_schleich" %}
                         <a href="{{ path('horse_schleich_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
                             {% endif %}
                             <img src="{{ vich_uploader_asset(item, 'imageFile') }}" alt="{{ item.name }}" />

@@ -11,7 +11,7 @@
             {% for item in items %}
                 {% if item in user.petshops %}
                 {% set thisClass='petshop' %}
-                {% else %}
+                {% elseif item in user.horseSchleiches %}
                     {% set thisClass='horse_schleich' %}
                     {% endif %}
                 {% include 'inc/cards.html.twig' %}

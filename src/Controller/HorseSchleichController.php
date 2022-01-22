@@ -33,7 +33,7 @@ class HorseSchleichController extends AbstractController
     }
 
     /**
-     * @Route ("/schleich/details/{slug}-{id}", name="horse_schleich_details", requirements={"id"="\d+"})
+     * @Route ("/schleich/details/{slug}-{id}", name="horse_schleich_details", requirements={"id"="\d+", "slug": "[a-z0-9\-]*"})
      * @param HorseSchleich $horseSchleich
      */
     public function details(HorseSchleich $horseSchleich, string $slug)

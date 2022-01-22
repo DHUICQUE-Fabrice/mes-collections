@@ -224,7 +224,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImageFile(File $file = null)
     {
         $this->imageFile = $file;
-        $newDate = $this->registeredAt->modify('-1 second');
+        if ($this->registeredAt){
+            $newDate = $this->registeredAt->modify('-1 second');
+        }else{
+            $newDate = new \DateTime();
+        }
         if($file){
             $this->registeredAt = $newDate;
         }

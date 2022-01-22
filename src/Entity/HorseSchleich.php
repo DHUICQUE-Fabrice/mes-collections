@@ -116,7 +116,11 @@ class HorseSchleich
     public function setImageFile(File $file = null)
     {
         $this->imageFile = $file;
-        $newDate = $this->createdAt->modify('-1 second');
+        if($this->createdAt){
+            $newDate = $this->createdAt->modify('-1 second');
+        }else{
+            $newDate = new \DateTime();
+        }
         if($file){
             $this->createdAt = $newDate;
         }

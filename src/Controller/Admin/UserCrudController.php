@@ -29,7 +29,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('nickname'),
             TextField::new('password')->onlyWhenCreating(),
             ArrayField::new('roles'),
-            TextField::new('email')->hideOnForm(),
+            TextField::new('email')->onlyWhenCreating(),
             TextareaField::new('about'),
             AssociationField::new('petshops'),
             AssociationField::new('horseSchleiches'),
