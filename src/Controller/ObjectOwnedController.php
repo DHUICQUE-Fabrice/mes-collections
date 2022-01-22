@@ -8,17 +8,14 @@ use App\Entity\User;
 use App\Form\HorseSchleichType;
 use App\Form\PetshopType;
 use App\Repository\ObjectFamilyRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ObjectOwnedController extends AbstractController
 {
-    private User $user;
     /**
      * @Route("/nouveau", name="create_new")
      */
