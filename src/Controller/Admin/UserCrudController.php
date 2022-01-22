@@ -6,10 +6,13 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -28,9 +31,12 @@ class UserCrudController extends AbstractCrudController
             ArrayField::new('roles'),
             TextField::new('email')->hideOnForm(),
             TextareaField::new('about'),
-            ArrayField::new('petshops'),
-            ArrayField::new('horseSchleiches'),
-            DateField::new('registeredAt')->hideOnForm()
+            AssociationField::new('petshops'),
+            AssociationField::new('horseSchleiches'),
+            DateField::new('registeredAt')->hideOnForm(),
+            TextField::new('imageFile')->setFormType(VichImageType::class),
+            ImageField::new('avatar')->setBasePath('uploads/images/')->onlyOnIndex()
+
         ];
     }
 

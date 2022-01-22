@@ -5,10 +5,13 @@ namespace App\Controller\Admin;
 use App\Entity\HorseSchleich;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class HorseSchleichCrudController extends AbstractCrudController
 {
@@ -24,11 +27,15 @@ class HorseSchleichCrudController extends AbstractCrudController
             IntegerField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextareaField::new('biography'),
-            TextField::new('type'),
-            TextField::new('coat'),
-            TextField::new('species'),
-            TextField::new('user'),
-            DateField::new('createdAt')->hideOnForm()
+            AssociationField::new('type'),
+            AssociationField::new('coat'),
+            AssociationField::new('species'),
+            AssociationField::new('user'),
+            AssociationField::new('objectFamily'),
+            DateField::new('createdAt')->hideOnForm(),
+            TextField::new('imageFile')->setFormType(VichImageType::class),
+            ImageField::new('picture')->setBasePath('uploads/images/')->onlyOnIndex()
+
         ];
     }
 

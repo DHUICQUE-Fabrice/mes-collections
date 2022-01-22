@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Repository\SchleichRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=SchleichRepository::class)
+ * @Vich\Uploadable
  */
 class HorseSchleich
 {
@@ -27,6 +30,13 @@ class HorseSchleich
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
+
+    /**
+     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="picture")
+     * @var File
+     */
+    private $imageFile;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -103,6 +113,19 @@ class HorseSchleich
         return $this;
     }
 
+    public function setImageFile(File $file = null)
+    {
+        $this->imageFile = $file;
+        $newDate = $this->createdAt->modify('-1 second');
+        if($file){
+            $this->createdAt = $newDate;
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
 
     public function getName(): ?string
     {

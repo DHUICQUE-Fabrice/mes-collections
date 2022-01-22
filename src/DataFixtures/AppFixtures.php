@@ -106,7 +106,8 @@ class AppFixtures extends Fixture
             $user->setEmail($faker->unique()->email())
                 ->setNickname($faker->unique()->userName())
                 ->setRegisteredAt(($faker->dateTimeBetween('- 1 year', '- 1 month')))
-                ->setRoles(['ROLE_USER']);
+                ->setRoles(['ROLE_USER'])
+                ->setAvatar('avatar-placeholder.png');
             $password =  $this->encoder->hashPassword($user, $user->getNickname());
             $user->setPassword($password);
             $manager->persist($user);
@@ -142,7 +143,7 @@ class AppFixtures extends Fixture
                 ->setUser($faker->randomElement($users))
                 ->setSpecies($faker->randomElement($species))
                 ->setSize($faker->randomElement($sizes))
-                ->setPicture($faker->imageUrl(300,200))
+                ->setPicture('petshop-placeholder.jpg')
                 ->setCreatedAt($faker->dateTimeBetween($petshop->getUser()->getRegisteredAt(), 'now'))
                 ->setObjectFamily($objectFamily);
                 ;
@@ -190,7 +191,7 @@ class AppFixtures extends Fixture
                 ->setSpecies($faker->randomElement($species))
                 ->setCoat($faker->randomElement($coats))
                 ->setType($faker->randomElement($types))
-                ->setPicture($faker->imageUrl(300,200))
+                ->setPicture('schleich-placeholder.jpg')
                 ->setCreatedAt($faker->dateTimeBetween($schleich->getUser()->getRegisteredAt(), 'now'))
                 ->setObjectFamily($objectFamily)
                 ;

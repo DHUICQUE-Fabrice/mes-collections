@@ -9,10 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"nickname"}, message="There is already an account with this nickname")
+ * @Vich\Uploadable
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -58,6 +61,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
+
+    /**
+     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="avatar")
+     * @var File
+     */
+    private $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
@@ -210,6 +219,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->avatar = $avatar;
 
         return $this;
+    }
+
+    public function setImageFile(File $file = null)
+    {
+        $this->imageFile = $file;
+        $newDate = $this->registeredAt->modify('-1 second');
+        if($file){
+            $this->registeredAt = $newDate;
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
     /**
