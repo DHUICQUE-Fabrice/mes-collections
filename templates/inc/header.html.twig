@@ -27,7 +27,11 @@
             </div>
             <div class="col-2">
                 <a href="{{ path('contact') }}" title="Contact" class="d-block link-dark text-decoration-none" aria-expanded="false">Contact</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin') }}" title="Admin" class="d-block link-dark text-decoration-none" aria-expanded="false">Admin</a>
+                {% endif %}
             </div>
+
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Rechercher">
             </form>

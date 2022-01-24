@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Services\ContactService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +23,7 @@ class ContactController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $contactService->persistContact($contact);
+            $contactService->isSent($contact);
             return $this->redirectToRoute('accueil');
         }
         return $this->render('contact/index.html.twig', [

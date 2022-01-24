@@ -8,3 +8,9 @@
     </div>
 
 {% endblock %}
+
+{% block configured_head_contents %}
+    <a href="{{ path('accueil') }}">Retour au site</a>
+    {{ parent() }}
+
+{% endblock %}
