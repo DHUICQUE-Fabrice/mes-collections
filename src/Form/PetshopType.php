@@ -10,14 +10,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PetshopType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('picture', null, [
-                'label'=>'Photo : '
+            ->add('imageFile', VichImageType::class, [
+                'label'=>'Veuillez ajouter une photo (facultatif)'
             ])
             ->add('name', null, [
                 'label'=>'Nom : '

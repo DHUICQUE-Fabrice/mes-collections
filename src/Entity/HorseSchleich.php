@@ -5,12 +5,12 @@ namespace App\Entity;
 use App\Repository\SchleichRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=SchleichRepository::class)
- * @Vich\Uploadable
+ * @Vich\Uploadable()
  */
 class HorseSchleich
 {
@@ -30,13 +30,6 @@ class HorseSchleich
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
-
-    /**
-     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="picture")
-     * @var File
-     */
-    private $imageFile;
-
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -78,6 +71,22 @@ class HorseSchleich
      */
     private $objectFamily;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageName;
+
+
+    /**
+     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -111,24 +120,6 @@ class HorseSchleich
         $this->picture = $picture;
 
         return $this;
-    }
-
-    public function setImageFile(File $file = null)
-    {
-        $this->imageFile = $file;
-        if($this->createdAt){
-            $newDate = $this->createdAt->modify('-1 second');
-        }else{
-            $newDate = new \DateTime();
-        }
-        if($file){
-            $this->createdAt = $newDate;
-        }
-    }
-
-    public function getImageFile()
-    {
-        return $this->imageFile;
     }
 
     public function getName(): ?string
@@ -223,6 +214,42 @@ class HorseSchleich
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function setImageFile(File $file = null){
+        $this->imageFile = $file;
+        if($file){
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
 }

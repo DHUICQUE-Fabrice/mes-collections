@@ -20,7 +20,6 @@ class HorseSchleichCrudController extends AbstractCrudController
         return HorseSchleich::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -33,9 +32,8 @@ class HorseSchleichCrudController extends AbstractCrudController
             AssociationField::new('user'),
             AssociationField::new('objectFamily'),
             DateField::new('createdAt')->hideOnForm(),
-            TextField::new('imageFile')->setFormType(VichImageType::class),
-            ImageField::new('picture')->setBasePath('uploads/images/')->onlyOnIndex()
-
+            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating(),
+            ImageField::new('imageName')->setBasePath('uploads/images/')->onlyOnIndex(),
         ];
     }
 

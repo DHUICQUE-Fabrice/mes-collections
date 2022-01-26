@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\HorseSchleichRepository;
 use App\Repository\PetshopRepository;
 use App\Repository\UserRepository;
@@ -25,6 +24,7 @@ class UserController extends AbstractController
                             Request $request
                             ): Response
     {
+
         $user = $userRepository->findOneBy(['nickname' => $nickname]);
         $petshops = $petshopRepository->findBy(['user' => $user]);
         $horseSchleiches = $horseSchleichRepository->findBy(['user' => $user]);

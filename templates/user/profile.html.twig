@@ -3,8 +3,8 @@
     {{ parent() }} | {{ user.nickname }}
 {% endblock %}
 {% block body %}
-{{ user.avatar }}
-    <p>{{ user.nickname }} a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
+    <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.nickname }}" title="{{ user.nickname }}">
+    <p>{{ user.nickname }} est membre de mes connexion depuis le {{ user.registeredAt | date('d/m/Y')}}, il a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
 <div id="cards_landscape_wrap-2">
     <div class="container">
         <div class="row">

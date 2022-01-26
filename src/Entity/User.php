@@ -7,15 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"nickname"}, message="There is already an account with this nickname")
- * @Vich\Uploadable
+ * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
+ * @Vich\Uploadable() *
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -58,17 +58,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $registeredAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $avatar;
-
-    /**
-     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="avatar")
-     * @var File
-     */
-    private $imageFile;
-
-    /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
      */
     private $petshops;
@@ -78,10 +67,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $horseSchleiches;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageName;
+
+    /**
+     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->petshops = new ArrayCollection();
         $this->horseSchleiches = new ArrayCollection();
+        $this->setRegisteredAt(new \DateTime());
     }
 
     public function getId(): ?int
@@ -209,36 +215,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?string $avatar): self
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function setImageFile(File $file = null)
-    {
-        $this->imageFile = $file;
-        if ($this->registeredAt){
-            $newDate = $this->registeredAt->modify('-1 second');
-        }else{
-            $newDate = new \DateTime();
-        }
-        if($file){
-            $this->registeredAt = $newDate;
-        }
-    }
-
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
     /**
      * @return Collection|Petshop[]
      */
@@ -253,7 +229,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->petshops[] = $petshop;
             $petshop->setUser($this);
         }
-
         return $this;
     }
 
@@ -265,7 +240,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $petshop->setUser(null);
             }
         }
-
         return $this;
     }
 
@@ -283,7 +257,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->horseSchleiches[] = $horseSchleich;
             $horseSchleich->setUser($this);
         }
-
         return $this;
     }
 
@@ -295,7 +268,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $horseSchleich->setUser(null);
             }
         }
-
         return $this;
     }
 
@@ -303,6 +275,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->getNickname();
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function setImageFile(File $file = null){
+        $this->imageFile = $file;
+        if($file){
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
 }

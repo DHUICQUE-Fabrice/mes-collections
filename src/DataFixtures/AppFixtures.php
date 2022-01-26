@@ -60,10 +60,13 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+
+
         $user = new User();
         $user->setEmail('admin@admin.fr')
             ->setNickname('Aelhan')
             ->setRegisteredAt($faker->dateTimeBetween('- 1 year', 'now'))
+            ->setImageName('avatar-placeholder.png')
             ->setRoles(['ROLE_ADMIN']);
         $password =  $this->encoder->hashPassword($user, $user->getNickname());
         $user->setPassword($password);
@@ -105,9 +108,10 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setEmail($faker->unique()->email())
                 ->setNickname($faker->unique()->userName())
+                ->setAbout($faker->realText)
+                ->setImageName('avatar-placeholder.png')
                 ->setRegisteredAt(($faker->dateTimeBetween('- 1 year', '- 1 month')))
-                ->setRoles(['ROLE_USER'])
-                ->setAvatar('avatar-placeholder.png');
+                ->setRoles(['ROLE_USER']);
             $password =  $this->encoder->hashPassword($user, $user->getNickname());
             $user->setPassword($password);
             $manager->persist($user);
@@ -143,10 +147,9 @@ class AppFixtures extends Fixture
                 ->setUser($faker->randomElement($users))
                 ->setSpecies($faker->randomElement($species))
                 ->setSize($faker->randomElement($sizes))
-                ->setPicture('petshop-placeholder.jpg')
+                ->setImageName('petshop-placeholder.jpg')
                 ->setCreatedAt($faker->dateTimeBetween($petshop->getUser()->getRegisteredAt(), 'now'))
                 ->setObjectFamily($objectFamily);
-                ;
 
             $manager->persist($petshop);
         }
@@ -191,10 +194,9 @@ class AppFixtures extends Fixture
                 ->setSpecies($faker->randomElement($species))
                 ->setCoat($faker->randomElement($coats))
                 ->setType($faker->randomElement($types))
-                ->setPicture('schleich-placeholder.jpg')
+                ->setImageName('schleich-placeholder.jpg')
                 ->setCreatedAt($faker->dateTimeBetween($schleich->getUser()->getRegisteredAt(), 'now'))
-                ->setObjectFamily($objectFamily)
-                ;
+                ->setObjectFamily($objectFamily);
             $manager->persist($schleich);
         }
     }
