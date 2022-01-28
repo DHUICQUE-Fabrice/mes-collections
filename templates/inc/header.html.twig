@@ -10,14 +10,14 @@
             </div>
             <div class="dropdown text-end">
                 {% if app.user %}
-                <a href="#" class="d-inline nav-link text-white" >{{ app.user.nickname }}</a>
+                <a href="/" class="d-inline nav-link text-white" >{{ app.user.nickname }}</a>
                 {% endif %}
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{ asset('img/icons/profile.png') }}" alt="Profil" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownMenu">
                     {% if app.user %}
-                        <li><a class="dropdown-item" href="#">Mon profil</a></li>
+                        <li><a class="dropdown-item" href="{{  path('profile', {'nickname': app.user.nickname}) }}">Mon profil</a></li>
                         <li><a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a></li>
                     {% else %}
                         <li><a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a></li>

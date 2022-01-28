@@ -32,7 +32,7 @@ class HorseSchleichCrudController extends AbstractCrudController
             AssociationField::new('user'),
             AssociationField::new('objectFamily'),
             DateField::new('createdAt')->hideOnForm(),
-            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating(),
+            TextField::new('imageFile')->setFormType(VichImageType::class),
             ImageField::new('imageName')->setBasePath('uploads/images/')->onlyOnIndex(),
         ];
     }
