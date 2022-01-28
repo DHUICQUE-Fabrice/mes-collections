@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -70,10 +71,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imageName;
+    private $imageName = "placeholder_avatar.png";
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
+     * @Assert\Image(
+     *     mimeTypes="images/*"
+     * )
      * @var File
      */
     private $imageFile;

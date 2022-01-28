@@ -6,6 +6,7 @@ use App\Repository\SchleichRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -74,11 +75,14 @@ class HorseSchleich
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imageName;
+    private $imageName = "placeholder_horseschleich.png";
 
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
+     * @Assert\Image(
+     *     mimeTypes="image/*"
+     * )     *
      * @var File
      */
     private $imageFile;

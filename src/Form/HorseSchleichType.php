@@ -19,7 +19,8 @@ class HorseSchleichType extends AbstractType
     {
         $builder
             ->add('imageFile', VichImageType::class, [
-                'label'=>'Veuillez ajouter une photo (facultatif)'
+                'label'=>'Veuillez ajouter une photo (facultatif)',
+                'required'=>false
             ])
             ->add('name', null, [
                 'label'=>'Nom : '
