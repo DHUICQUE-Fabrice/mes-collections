@@ -8,9 +8,12 @@
 
         {{ form_start(horseSchleichForm) }}
         {{ form_widget(horseSchleichForm) }}
+        <br>
         <div class="row">
-            <div class="col-9"></div>
-            <button class="btn btn-primary">Valider</button>
+            <div class="col-8"></div>
+            <div class="col-4">
+                <button type="submit" name="valid" class="btn btn-primary" onclick="this.disabled=true;this.value='Enregistrement...';this.form.submit()">Valider</button>
+            </div>
         </div>
         {{ form_end(horseSchleichForm) }}
 
