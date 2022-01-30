@@ -4,7 +4,25 @@ $success:       #3A86FF;
 $info:          #FF006E;
 $light:         #8338EC;
 $gradient-left: #ba21a8;
-$font-family-base: 'Verdana', sans-serif;
+$font-family-base: 'Noto Sans', sans-serif;
+
+//$grid-breakpoints: (
+//        xs: 320px,
+//        sm: 576px,
+//        md: 768px,
+//        lg: 992px,
+//        xl: 1200px,
+//        xxl: 1400px
+//) !default;
+
+//$container-max-widths: (
+//        xs: 320px,
+//        sm: 540px,
+//        md: 720px,
+//        lg: 960px,
+//        xl: 1140px,
+//        xxl: 1320px
+//) !default;
 
 body{
   padding: 0;

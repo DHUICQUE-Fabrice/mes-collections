@@ -4,17 +4,26 @@
         <div class="card-flyer">
             <div class="text-box">
                 <div class="image-box">
-                    {% if thisClass == "petshop" %}
-                    <a href="{{ path('petshop_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
+                    {% if app.user %}
+                        {% if thisClass == "petshop" %}
+                            <a href="{{ path('petshop_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
                         {% elseif thisClass == "horse_schleich" %}
-                        <a href="{{ path('horse_schleich_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
-                            {% endif %}
+                            <a href="{{ path('horse_schleich_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
+                        {% endif %}
                             <img src="{{ vich_uploader_asset(item, 'imageFile') | imagine_filter('thumb')}}" alt="{{ item.name }}" />
-                        </a>
+                            </a>
+                    {% else %}
+                        <img src="{{ vich_uploader_asset(item, 'imageFile') | imagine_filter('thumb')}}" alt="{{ item.name }}" />
+                    {% endif %}
                 </div>
                 <div class="text-container">
                     <h6>{{ item.name }}</h6>
-                    Propriétaire : <a href="{{ path('profile', {nickname: item.user.nickname}) }}" class="nav-link" title="{{ item.user.nickname }}">{{ item.user.nickname }}</a>
+                    Propriétaire :
+                        {% if app.user %}
+                            <a href="{{ path('profile', {nickname: item.user.nickname}) }}" class="nav-link" title="{{ item.user.nickname }}">{{ item.user.nickname }}</a>
+                        {% else %}
+                            {{ item.user.nickname }}
+                        {% endif %}
                     <p>{{ item.biography | u.truncate(50, '...', false) }}</p>
                 </div>
             </div>
