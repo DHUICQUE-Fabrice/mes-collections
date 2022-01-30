@@ -38,13 +38,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN, requires_channel: https }
-        - { path: ^/profil, roles: ROLE_USER, requires_channel: https }
-        - { path: ^/nouveau, roles: ROLE_USER, requires_channel: https }
-        - { path: /details, roles: ROLE_USER, requires_channel: https }
-        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        # catch all other URLs
-        - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profil, roles: ROLE_USER }
+        - { path: ^/nouveau, roles: ROLE_USER }
+        - { path: /details, roles: ROLE_USER }
+#        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+#        # catch all other URLs
+#        - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 when@test:
     security:
         password_hashers:
