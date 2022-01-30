@@ -12,12 +12,7 @@
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
-###< symfony/phpunit-bridge ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
@@ -25,11 +20,12 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
 /public/uploads/images/*
 !/public/uploads/images/placeholder_avatar.png
 !/public/uploads/images/placeholder_horseschleich.png
 !/public/uploads/images/placeholder_petshop.png
 
 ###> liip/imagine-bundle ###
-/public/media/cache/
+/public/media/cache/thumb
 ###< liip/imagine-bundle ###
