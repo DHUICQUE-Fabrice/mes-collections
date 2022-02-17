@@ -35,8 +35,8 @@ class UserCrudController extends AbstractCrudController
             AssociationField::new('petshops')->onlyOnIndex(),
             AssociationField::new('horseSchleiches')->onlyOnIndex(),
             DateField::new('registeredAt')->hideOnForm(),
-            TextField::new('imageFile')->setFormType(VichImageType::class),
-            ImageField::new('imageName')->setBasePath('uploads/images/')->onlyOnIndex(),
+//            TextField::new('imageFile')->setFormType(VichImageType::class),
+//            ImageField::new('imageName')->setBasePath('uploads/images/')->onlyOnIndex(),
         ];
     }
 
