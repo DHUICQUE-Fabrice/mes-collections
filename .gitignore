@@ -27,5 +27,5 @@ yarn-error.log
 !/public/uploads/images/placeholder_petshop.png
 
 ###> liip/imagine-bundle ###
-/public/media/cache/thumb
+/public/media/cache/
 ###< liip/imagine-bundle ###
