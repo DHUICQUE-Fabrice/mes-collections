@@ -1,4 +1,10 @@
 {
+    "aws/aws-crt-php": {
+        "version": "v1.0.2"
+    },
+    "aws/aws-sdk-php": {
+        "version": "3.209.30"
+    },
     "cocur/slugify": {
         "version": "v4.1.0"
     },
@@ -145,6 +151,28 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "league/flysystem": {
+        "version": "2.4.3"
+    },
+    "league/flysystem-aws-s3-v3": {
+        "version": "2.4.3"
+    },
+    "league/flysystem-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "913dc3d7a5a1af0d2b044c5ac3a16e2f851d7380"
+        },
+        "files": [
+            "./config/packages/flysystem.yaml",
+            "./var/storage/.gitignore"
+        ]
+    },
+    "league/mime-type-detection": {
+        "version": "1.9.0"
+    },
     "liip/imagine-bundle": {
         "version": "2.7",
         "recipe": {
@@ -166,6 +194,9 @@
     },
     "monolog/monolog": {
         "version": "2.3.5"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.6.1"
     },
     "myclabs/deep-copy": {
         "version": "1.10.2"

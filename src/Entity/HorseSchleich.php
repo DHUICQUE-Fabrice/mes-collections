@@ -74,16 +74,14 @@ class HorseSchleich
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $imageName = "placeholder_horseschleich.png";
 
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
-     * @Assert\Image(
-     *     mimeTypes="image/*"
-     * )     *
-     * @var File
+     * @var File|null
      */
     private $imageFile;
 
@@ -244,7 +242,7 @@ class HorseSchleich
         return $this;
     }
 
-    public function setImageFile(File $file = null){
+    public function setImageFile(?File $file = null){
         $this->imageFile = $file;
         if($file){
             $this->updatedAt = new \DateTime();

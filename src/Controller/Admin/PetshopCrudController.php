@@ -32,8 +32,8 @@ class PetshopCrudController extends AbstractCrudController
             AssociationField::new('user'),
             AssociationField::new('objectFamily'),
             DateField::new('createdAt')->hideOnForm(),
-//            TextField::new('imageFile')->setFormType(VichImageType::class),
-//            ImageField::new('imageName')->setBasePath('uploads/images/')->onlyOnIndex(),
+            TextField::new('imageFile', 'Upload')->setFormType(VichImageType::class)->onlyOnForms(),
+            ImageField::new('imageName')->setBasePath('%env(STACKHERO_MINIO_ENDPOINT)%')->hideOnForm(),
         ];
     }
 

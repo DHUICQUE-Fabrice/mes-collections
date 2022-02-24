@@ -65,14 +65,15 @@ class ObjectOwnedController extends AbstractController
         /** @var $user User */
         $user = $this->getUser();
         $family = $objectFamilyRepository->findOneBy(['name'=>'HorseSchleich']);
-        $horseSchleich = new HorseSchleich();
-        $horseSchleich->setUser($user)
-            ->setObjectFamily($family);
+
 
         $horseSchleichForm = $this->createForm(HorseSchleichType::class, $horseSchleich);
 
         $horseSchleichForm->handleRequest($request);
         if ($horseSchleichForm->isSubmitted() && $horseSchleichForm->isValid()){
+            $horseSchleich = new HorseSchleich();
+            $horseSchleich->setUser($user)
+                ->setObjectFamily($family);
             $entityManager->persist($horseSchleich);
             $entityManager->flush();
             $this->addFlash('success', $horseSchleich->getName() . ' a bien été ajouté !');

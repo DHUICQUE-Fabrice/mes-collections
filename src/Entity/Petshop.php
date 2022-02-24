@@ -69,16 +69,14 @@ class Petshop
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $imageName = "placeholder_petshop.png";
 
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
-     * @Assert\Image(
-     *     mimeTypes="image/*"
-     * )
-     * @var File
+     * @var File|null
      */
     private $imageFile;
 
@@ -228,7 +226,7 @@ class Petshop
         return $this;
     }
 
-    public function setImageFile(File $file = null){
+    public function setImageFile(?File $file = null){
         $this->imageFile = $file;
         if($file){
             $this->updatedAt = new \DateTime();

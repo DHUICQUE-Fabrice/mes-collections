@@ -70,15 +70,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $imageName = "placeholder_avatar.png";
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
-     * @Assert\Image(
-     *     mimeTypes="images/*"
-     * )
-     * @var File
+     * @var File|null
      */
     private $imageFile;
 
@@ -293,7 +291,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setImageFile(File $file = null){
+    public function setImageFile(?File $file = null){
         $this->imageFile = $file;
         if($file){
             $this->updatedAt = new \DateTime();

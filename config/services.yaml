@@ -27,3 +27,13 @@ services:
     App\Listener\ImageCacheSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    Aws\S3\S3Client:
+        arguments:
+            - version: 'latest'
+              region: 'eu-east-1'
+              endpoint: '%env(STACKHERO_MINIO_HOST)%'
+              credentials:
+                  key: '%env(STACKHERO_MINIO_ROOT_ACCESS_KEY)%'
+                  secret: '%env(STACKHERO_MINIO_ROOT_SECRET_KEY)%'
+
