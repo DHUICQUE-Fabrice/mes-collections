@@ -20,7 +20,8 @@ class PetshopType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'label'=>'Veuillez ajouter une photo (facultatif, maximum 2Mb)',
                 'required' => false,
-                'allow_delete' => false
+                'allow_delete' => false,
+                'download_link' => false
             ])
             ->add('name', null, [
                 'label'=>'Nom : '

@@ -3,7 +3,7 @@
     {{ parent() }} | {{ user.nickname }}
 {% endblock %}
 {% block body %}
-    <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
+    <img src="{{ vich_uploader_asset(user, 'imageFile')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
     <p>{{ user.nickname }} est membre de mes connexion depuis le {{ user.registeredAt | date('d/m/Y')}}, il a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
 <div id="cards_landscape_wrap-2">
     <div class="container">

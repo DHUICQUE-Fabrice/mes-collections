@@ -2,3 +2,13 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    filter_sets:
+        miniature:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [600, 330]
+                    mode: outbound
+
+    controller:
+        redirect_response_code: 302

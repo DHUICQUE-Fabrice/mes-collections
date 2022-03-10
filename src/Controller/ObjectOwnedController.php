@@ -67,6 +67,8 @@ class ObjectOwnedController extends AbstractController
         $family = $objectFamilyRepository->findOneBy(['name'=>'HorseSchleich']);
 
 
+        $horseSchleich = new HorseSchleich();
+        $horseSchleich->setUser($user)->setObjectFamily($family);
         $horseSchleichForm = $this->createForm(HorseSchleichType::class, $horseSchleich);
 
         $horseSchleichForm->handleRequest($request);

@@ -35,7 +35,7 @@ class UserCrudController extends AbstractCrudController
             AssociationField::new('horseSchleiches')->onlyOnIndex(),
             DateField::new('registeredAt')->hideOnForm(),
             TextField::new('imageFile', 'Upload')->setFormType(VichImageType::class)->onlyOnForms(),
-            ImageField::new('imageName')->setBasePath('%env(STACKHERO_MINIO_ENDPOINT)%')->hideOnForm(),
+            ImageField::new('imageName')->setBasePath('http://77.149.66.147:9000/mes-collections' )->hideOnForm(),
         ];
     }
 

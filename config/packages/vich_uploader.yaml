@@ -4,7 +4,7 @@ vich_uploader:
 
     mappings:
         uploaded_images:
-            uri_prefix: '%uploaded_images%'
+            uri_prefix: '%env(STACKHERO_MINIO_PATH)%'
             upload_destination: aws.storage
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             inject_on_load: false
