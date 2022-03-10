@@ -18,14 +18,14 @@ DirectoryIndex index.php
 </IfModule>
 
 <IfModule mod_rewrite.c>
-#    RewriteEngine On
-#    RewriteCond %{HTTPS} !=on
-#    RewriteCond %{HTTP:X-Forwarded-Proto} !https
-#    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-#
-#    RewriteCond %{HTTPS} on
-#    RewriteCond %{THE_REQUEST} \.(png|jpg|gif|jpeg|bmp)
-#    RewriteRule ^ http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    RewriteCond %{HTTPS} on
+    RewriteCond %{THE_REQUEST} \.(png|jpg|gif|jpeg|bmp)
+    RewriteRule ^ http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 
 #    RewriteCond %{HTTPS} on
