@@ -42,11 +42,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
 
-        - { path: ^/admin, roles: ROLE_ADMIN, requires_channel: https }
-        - { path: ^/profil, roles: ROLE_USER, requires_channel: https }
-        - { path: ^/nouveau, roles: ROLE_USER, requires_channel: https }
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: \.(png|jpg|gif|jpeg|bmp)$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profil, roles: ROLE_USER }
+        - { path: ^/nouveau, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 #        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 #        # catch all other URLs
