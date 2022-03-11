@@ -4,12 +4,9 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTime;
-use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
-use Exception;
-use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -29,89 +26,88 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private ?string $nickname;
+    private $nickname;
 
     /**
      * @ORM\Column(type="json")
      */
-    private ?array $roles = [];
+    private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private ?string $password;
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $email;
+    private $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Ignore
      */
-    private ?string $about;
+    private $about;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?DateTime $registeredAt;
+    private $registeredAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
      */
-    private ?PersistentCollection $petshops;
+    private $petshops;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="user")
      */
-    private ?PersistentCollection $horseSchleiches;
+    private $horseSchleiches;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private ?string $imageName = "placeholder_avatar.png";
+    private $imageName = "placeholder_avatar.png";
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
      * @var File|null
      * @Ignore
      */
-    private ?File $imageFile;
+    private $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $updatedAt;
+    private $updatedAt;
 
     public function __construct()
     {
-        $this->petshops = new PersistentCollection();
-        $this->horseSchleiches = new PersistentCollection();
+        $this->petshops = new ArrayCollection();
+        $this->horseSchleiches = new ArrayCollection();
         $this->setRegisteredAt(new DateTime());
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNickname(): ?string
+    public function getNickname()
     {
         return $this->nickname;
     }
 
-    public function setNickname(string $nickname): self
+    public function setNickname($nickname)
     {
         $this->nickname = $nickname;
-
         return $this;
     }
 
@@ -120,7 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getUserIdentifier(): string
+    public function getUserIdentifier()
     {
         return $this->nickname;
     }
@@ -128,7 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
-    public function getUsername(): string
+    public function getUsername()
     {
         return $this->nickname;
     }
@@ -136,7 +132,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
@@ -145,7 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles)
     {
         $this->roles = $roles;
 
@@ -154,13 +150,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see PasswordAuthenticatedUserInterface
+     *
      */
     public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword($password)
     {
         $this->password = $password;
 
@@ -173,7 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getSalt(): ?string
+    public function getSalt()
     {
         return null;
     }
@@ -187,36 +184,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail($email)
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getAbout(): ?string
+    public function getAbout()
     {
         return $this->about;
     }
 
-    public function setAbout(?string $about): self
+    public function setAbout($about)
     {
         $this->about = $about;
 
         return $this;
     }
 
-    public function getRegisteredAt(): ?DateTime
+    public function getRegisteredAt()
     {
         return $this->registeredAt;
     }
 
-    public function setRegisteredAt(DateTime $registeredAt): self
+    public function setRegisteredAt($registeredAt)
     {
         $this->registeredAt = $registeredAt;
 
@@ -226,12 +223,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection|Petshop[]
      */
-    public function getPetshops(): Collection
+    public function getPetshops()
     {
         return $this->petshops;
     }
 
-    public function addPetshop(Petshop $petshop): self
+    public function addPetshop($petshop)
     {
         if (!$this->petshops->contains($petshop)) {
             $this->petshops[] = $petshop;
@@ -240,7 +237,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removePetshop(Petshop $petshop): self
+    public function removePetshop($petshop)
     {
         if ($this->petshops->removeElement($petshop)) {
             // set the owning side to null (unless already changed)
@@ -254,12 +251,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection|HorseSchleich[]
      */
-    public function getHorseSchleiches(): Collection
+    public function getHorseSchleiches()
     {
         return $this->horseSchleiches;
     }
 
-    public function addHorseSchleich(HorseSchleich $horseSchleich): self
+    public function addHorseSchleich($horseSchleich)
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
             $this->horseSchleiches[] = $horseSchleich;
@@ -268,7 +265,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeHorseSchleich(HorseSchleich $horseSchleich): self
+    public function removeHorseSchleich($horseSchleich)
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
             // set the owning side to null (unless already changed)
@@ -285,36 +282,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getNickname();
     }
 
-    public function getImageName(): ?string
+    public function getImageName()
     {
         return $this->imageName;
     }
 
-    public function setImageName(?string $imageName): self
+    public function setImageName($imageName)
     {
         $this->imageName = $imageName;
 
         return $this;
     }
 
-    public function setImageFile(?File $file = null){
+    public function setImageFile($file = null){
         $this->imageFile = $file;
         if($file){
             $this->updatedAt = new DateTime();
         }
     }
 
-    public function getImageFile(): ?File
+    public function getImageFile()
     {
         return $this->imageFile;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
+    public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
