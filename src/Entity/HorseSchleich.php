@@ -21,193 +21,193 @@ class HorseSchleich
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?DateTime $createdAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $picture;
+    private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $name;
+    private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $biography;
+    private $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseType::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?HorseType $type;
+    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseCoat::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?HorseCoat $coat;
+    private $coat;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseSpecies::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?HorseSpecies $species;
+    private $species;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?User $user;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=ObjectFamily::class, inversedBy="horseSchleich")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?ObjectFamily $objectFamily;
+    private $objectFamily;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private ?string $imageName = "placeholder_horseschleich.png";
+    private $imageName = "placeholder_horseschleich.png";
 
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
      * @var File|null
      */
-    private ?File $imageFile;
+    private $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $updatedAt;
+    private $updatedAt;
 
     public function __construct()
     {
         $this->setCreatedAt(new DateTime());
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function getPicture()
     {
         return $this->picture;
     }
 
-    public function setPicture(?string $picture): self
+    public function setPicture($picture)
     {
         $this->picture = $picture;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name)
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getBiography(): ?string
+    public function getBiography()
     {
         return $this->biography;
     }
 
-    public function setBiography(?string $biography): self
+    public function setBiography($biography)
     {
         $this->biography = $biography;
 
         return $this;
     }
 
-    public function getType(): ?HorseType
+    public function getType()
     {
         return $this->type;
     }
 
-    public function setType(?HorseType $type): self
+    public function setType($type)
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getCoat(): ?HorseCoat
+    public function getCoat()
     {
         return $this->coat;
     }
 
-    public function setCoat(?HorseCoat $coat): self
+    public function setCoat($coat)
     {
         $this->coat = $coat;
 
         return $this;
     }
 
-    public function getSpecies(): ?HorseSpecies
+    public function getSpecies()
     {
         return $this->species;
     }
 
-    public function setSpecies(?HorseSpecies $species): self
+    public function setSpecies($species)
     {
         $this->species = $species;
 
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug()
     {
         return (new Slugify())->slugify($this->name);
     }
 
-    public function getUser(): ?User
+    public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser($user)
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getObjectFamily(): ?ObjectFamily
+    public function getObjectFamily()
     {
         return $this->objectFamily;
     }
 
-    public function setObjectFamily(?ObjectFamily $objectFamily): self
+    public function setObjectFamily($objectFamily)
     {
         $this->objectFamily = $objectFamily;
 
@@ -219,40 +219,39 @@ class HorseSchleich
         return $this->getName();
     }
 
-    public function getImageName(): ?string
+    public function getImageName()
     {
         return $this->imageName;
     }
 
-    public function setImageName(?string $imageName): self
+    public function setImageName($imageName)
     {
         $this->imageName = $imageName;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
+    public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function setImageFile(?File $file = null){
+    public function setImageFile($file = null){
         $this->imageFile = $file;
         if($file){
             $this->updatedAt = new DateTime();
         }
     }
 
-    public function getImageFile(): ?File
+    public function getImageFile()
     {
         return $this->imageFile;
     }
-
 }
