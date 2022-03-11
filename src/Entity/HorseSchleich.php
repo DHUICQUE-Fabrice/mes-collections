@@ -36,30 +36,30 @@ class HorseSchleich
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private string $biography;
+    private ?string $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseType::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private HorseType $type;
+    private ?HorseType $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseCoat::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private HorseCoat $coat;
+    private ?HorseCoat $coat;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseSpecies::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private HorseSpecies $species;
+    private ?HorseSpecies $species;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="horseSchleiches")

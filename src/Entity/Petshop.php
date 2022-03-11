@@ -27,22 +27,22 @@ class Petshop
     /**
      * @ORM\Column(type="datetime")
      */
-    private DateTime $createdAt;
+    private ?DateTime $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $picture;
+    private ?string $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private string $biography;
+    private ?string $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=PetshopSize::class, inversedBy="petshops")
