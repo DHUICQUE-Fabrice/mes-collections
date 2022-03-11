@@ -18,34 +18,34 @@ class HorseCoat
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $name;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="coat")
      */
-    private PersistentCollection $horseSchleiches;
+    private $horseSchleiches;
 
     public function __construct()
     {
-        $this->horseSchleiches = new PersistentCollection();
+        $this->horseSchleiches = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -55,12 +55,12 @@ class HorseCoat
     /**
      * @return Collection|HorseSchleich[]
      */
-    public function getHorseSchleiches(): Collection
+    public function getHorseSchleiches()
     {
         return $this->horseSchleiches;
     }
 
-    public function addHorseSchleich(HorseSchleich $horseSchleich): self
+    public function addHorseSchleich($horseSchleich)
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
             $this->horseSchleiches[] = $horseSchleich;
@@ -70,15 +70,13 @@ class HorseCoat
         return $this;
     }
 
-    public function removeHorseSchleich(HorseSchleich $horseSchleich): self
+    public function removeHorseSchleich($horseSchleich)
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
-            // set the owning side to null (unless already changed)
             if ($horseSchleich->getCoat() === $this) {
                 $horseSchleich->setCoat(null);
             }
         }
-
         return $this;
     }
 

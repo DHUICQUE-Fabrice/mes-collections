@@ -18,34 +18,34 @@ class PetshopSize
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $name;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="size")
      */
-    private PersistentCollection $petshops;
+    private $petshops;
 
     public function __construct()
     {
-        $this->petshops = new PersistentCollection();
+        $this->petshops = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -55,12 +55,12 @@ class PetshopSize
     /**
      * @return Collection|Petshop[]
      */
-    public function getPetshops(): Collection
+    public function getPetshops()
     {
         return $this->petshops;
     }
 
-    public function addPetshop(Petshop $petshop): self
+    public function addPetshop($petshop)
     {
         if (!$this->petshops->contains($petshop)) {
             $this->petshops[] = $petshop;
@@ -70,15 +70,13 @@ class PetshopSize
         return $this;
     }
 
-    public function removePetshop(Petshop $petshop): self
+    public function removePetshop(Petshop $petshop)
     {
         if ($this->petshops->removeElement($petshop)) {
-            // set the owning side to null (unless already changed)
             if ($petshop->getSize() === $this) {
                 $petshop->setSize(null);
             }
         }
-
         return $this;
     }
 

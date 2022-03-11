@@ -18,40 +18,40 @@ class ObjectFamily
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $name;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="objectFamily")
      */
-    private PersistentCollection $petshop;
+    private $petshop;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="objectFamily")
      */
-    private PersistentCollection $horseSchleich;
+    private $horseSchleich;
 
     public function __construct()
     {
-        $this->petshop = new PersistentCollection();
-        $this->horseSchleich = new PersistentCollection();
+        $this->petshop = new ArrayCollection();
+        $this->horseSchleich = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -61,42 +61,39 @@ class ObjectFamily
     /**
      * @return Collection|Petshop[]
      */
-    public function getPetshop(): Collection
+    public function getPetshop()
     {
         return $this->petshop;
     }
 
-    public function addPetshop(Petshop $petshop): self
+    public function addPetshop($petshop)
     {
         if (!$this->petshop->contains($petshop)) {
             $this->petshop[] = $petshop;
             $petshop->setObjectFamily($this);
         }
-
         return $this;
     }
 
-    public function removePetshop(Petshop $petshop): self
+    public function removePetshop($petshop)
     {
         if ($this->petshop->removeElement($petshop)) {
-            // set the owning side to null (unless already changed)
             if ($petshop->getObjectFamily() === $this) {
                 $petshop->setObjectFamily(null);
             }
         }
-
         return $this;
     }
 
     /**
      * @return Collection|HorseSchleich[]
      */
-    public function getHorseSchleich(): Collection
+    public function getHorseSchleich()
     {
         return $this->horseSchleich;
     }
 
-    public function addHorseSchleich(HorseSchleich $horseSchleich): self
+    public function addHorseSchleich($horseSchleich)
     {
         if (!$this->horseSchleich->contains($horseSchleich)) {
             $this->horseSchleich[] = $horseSchleich;
@@ -106,10 +103,9 @@ class ObjectFamily
         return $this;
     }
 
-    public function removeHorseSchleich(HorseSchleich $horseSchleich): self
+    public function removeHorseSchleich($horseSchleich)
     {
         if ($this->horseSchleich->removeElement($horseSchleich)) {
-            // set the owning side to null (unless already changed)
             if ($horseSchleich->getObjectFamily() === $this) {
                 $horseSchleich->setObjectFamily(null);
             }

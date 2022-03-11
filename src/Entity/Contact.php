@@ -16,94 +16,92 @@ class Contact
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $nickname;
+    private $nickname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $email;
+    private $email;
 
     /**
      * @ORM\Column(type="text")
      */
-    private ?string $message;
+    private $message;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?DateTimeInterface $createdAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private ?bool $isSent;
+    private $isSent;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNickname(): ?string
+    public function getNickname()
     {
         return $this->nickname;
     }
 
-    public function setNickname(string $nickname): self
+    public function setNickname($nickname)
     {
         $this->nickname = $nickname;
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail($email)
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getMessage(): ?string
+    public function getMessage()
     {
         return $this->message;
     }
 
-    public function setMessage(string $message): self
+    public function setMessage($message)
     {
         $this->message = $message;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
-    public function getIsSent(): ?bool
+    public function getIsSent()
     {
         return $this->isSent;
     }
 
-    public function setIsSent(bool $isSent): self
+    public function setIsSent($isSent)
     {
         $this->isSent = $isSent;
-
         return $this;
     }
 }
