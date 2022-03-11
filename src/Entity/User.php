@@ -323,17 +323,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function serialize(): ?string
     {
         return serialize(array(
-            $this->id,
-            $this->nickname,
-            $this->roles,
-            $this->password,
-            $this->email,
-            $this->about,
-            $this->registeredAt,
-            $this->petshops,
-            $this->horseSchleiches,
-            $this->imageName,
-            $this->updatedAt
+            $this->getId(),
+            $this->getNickname(),
+            $this->getRoles(),
+            $this->getPassword(),
+            $this->getEmail(),
+            $this->getRegisteredAt(),
+            $this->getPetshops(),
+            $this->getHorseSchleiches(),
+            $this->getImageName(),
+            $this->getUpdatedAt()
         ));
     }
 
@@ -345,7 +344,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             $this->roles,
             $this->password,
             $this->email,
-            $this->about,
             $this->registeredAt,
             $this->petshops,
             $this->horseSchleiches,
