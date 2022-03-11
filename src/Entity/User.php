@@ -22,73 +22,74 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
  * @Vich\Uploadable()
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private string $nickname;
+    private ?string $nickname;
 
     /**
      * @ORM\Column(type="json")
      */
-    private array $roles = [];
+    private ?array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private string $password;
+    private ?string $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Ignore
      */
-    private string $about;
+    private ?string $about;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private DateTime $registeredAt;
+    private ?DateTime $registeredAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
      */
-    private PersistentCollection $petshops;
+    private ?PersistentCollection $petshops;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="user")
      */
-    private PersistentCollection $horseSchleiches;
+    private ?PersistentCollection $horseSchleiches;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private string $imageName = "placeholder_avatar.png";
+    private ?string $imageName = "placeholder_avatar.png";
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
      * @var File|null
      * @Ignore
      */
-    private File $imageFile;
+    private ?File $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private DateTimeInterface $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct()
     {
@@ -320,23 +321,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    public function serialize(): ?string
-    {
-        return serialize(array(
-            $this->getId(),
-            $this->getNickname(),
-            $this->getPassword(),
-            $this->getEmail(),
-        ));
-    }
-
-    public function unserialize($data)
-    {
-        list(
-            $this->id,
-            $this->nickname,
-            $this->password,
-            $this->email,
-            ) = unserialize($data);
-    }
 }

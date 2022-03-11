@@ -10,7 +10,9 @@
         </form>
     {% endif %}
     <img src="{{ vich_uploader_asset(user, 'imageFile')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
-    <p class="text-black text-center">{{ user.about }}</p>
+    {% if app.user.about %}
+        <p class="text-black text-center">{{ user.about }}</p>
+    {% endif %}
     <p class="text-center text-black">{{ user.nickname }} est membre depuis le {{ user.registeredAt | date('d/m/Y')}}, il a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
     </div>
     <div id="cards_landscape_wrap-2">
