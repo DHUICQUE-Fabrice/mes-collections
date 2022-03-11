@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center">Bonjour {{ user.nickname }}, ici vous pouvez modifier vos informations</h1>
+    <br>
+    <div class="container">
+        {{ form_start(userForm) }}
+        {{ form_widget(userForm) }}
+        <button type="submit" name="valid" class="btn btn-primary" onclick="this.disabled=true;this.value='Enregistrement...';this.form.submit()">Valider</button>
+        {{ form_end(userForm) }}
+    </div>
+    <p class="text-black text-center">Pour modifier votre mot de passe, veuillez utiliser le lien "Mot de passe oublié" sur la page de connexion.</p>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Modification du profil
+{% endblock %}
+

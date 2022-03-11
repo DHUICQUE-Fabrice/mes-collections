@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SchleichRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
@@ -19,17 +21,17 @@ class HorseSchleich
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?DateTime $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picture;
+    private ?string $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -63,35 +65,35 @@ class HorseSchleich
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private ?User $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=ObjectFamily::class, inversedBy="horseSchleich")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $objectFamily;
+    private ?ObjectFamily $objectFamily;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private $imageName = "placeholder_horseschleich.png";
+    private ?string $imageName = "placeholder_horseschleich.png";
 
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
      * @var File|null
      */
-    private $imageFile;
+    private ?File $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -99,12 +101,12 @@ class HorseSchleich
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -229,12 +231,12 @@ class HorseSchleich
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -244,11 +246,11 @@ class HorseSchleich
     public function setImageFile(?File $file = null){
         $this->imageFile = $file;
         if($file){
-            $this->updatedAt = new \DateTime();
+            $this->updatedAt = new DateTime();
         }
     }
 
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }

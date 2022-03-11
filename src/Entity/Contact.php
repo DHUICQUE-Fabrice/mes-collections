@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,32 +16,32 @@ class Contact
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nickname;
+    private ?string $nickname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $message;
+    private ?string $message;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isSent;
+    private ?bool $isSent;
 
     public function getId(): ?int
     {
@@ -55,7 +56,6 @@ class Contact
     public function setNickname(string $nickname): self
     {
         $this->nickname = $nickname;
-
         return $this;
     }
 
@@ -83,12 +83,12 @@ class Contact
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 

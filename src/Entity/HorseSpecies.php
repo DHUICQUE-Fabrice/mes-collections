@@ -6,6 +6,7 @@ use App\Repository\HorseSpeciesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=HorseSpeciesRepository::class)
@@ -17,21 +18,21 @@ class HorseSpecies
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="species")
      */
-    private $horseSchleiches;
+    private PersistentCollection $horseSchleiches;
 
     public function __construct()
     {
-        $this->horseSchleiches = new ArrayCollection();
+        $this->horseSchleiches = new PersistentCollection();
     }
 
     public function getId(): ?int

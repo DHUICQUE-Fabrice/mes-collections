@@ -6,6 +6,7 @@ use App\Repository\ObjectFamilyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ObjectFamilyRepository::class)
@@ -17,27 +18,27 @@ class ObjectFamily
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="objectFamily")
      */
-    private $petshop;
+    private PersistentCollection $petshop;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="objectFamily")
      */
-    private $horseSchleich;
+    private PersistentCollection $horseSchleich;
 
     public function __construct()
     {
-        $this->petshop = new ArrayCollection();
-        $this->horseSchleich = new ArrayCollection();
+        $this->petshop = new PersistentCollection();
+        $this->horseSchleich = new PersistentCollection();
     }
 
     public function getId(): ?int

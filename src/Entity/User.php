@@ -3,14 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+use Exception;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -18,78 +22,79 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
  * @Vich\Uploadable()
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $nickname;
+    private string $nickname;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $about;
+    private string $about;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $registeredAt;
+    private DateTime $registeredAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
      */
-    private $petshops;
+    private PersistentCollection $petshops;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="user")
      */
-    private $horseSchleiches;
+    private PersistentCollection $horseSchleiches;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private $imageName = "placeholder_avatar.png";
+    private string $imageName = "placeholder_avatar.png";
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
      * @var File|null
+     * @Ignore
      */
-    private $imageFile;
+    private File $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private DateTimeInterface $updatedAt;
 
     public function __construct()
     {
-        $this->petshops = new ArrayCollection();
-        $this->horseSchleiches = new ArrayCollection();
-        $this->setRegisteredAt(new \DateTime());
+        $this->petshops = new PersistentCollection();
+        $this->horseSchleiches = new PersistentCollection();
+        $this->setRegisteredAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -116,7 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->nickname;
+        return $this->nickname;
     }
 
     /**
@@ -124,7 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->nickname;
+        return $this->nickname;
     }
 
     /**
@@ -205,12 +210,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRegisteredAt(): ?\DateTime
+    public function getRegisteredAt(): ?DateTime
     {
         return $this->registeredAt;
     }
 
-    public function setRegisteredAt(\DateTime $registeredAt): self
+    public function setRegisteredAt(DateTime $registeredAt): self
     {
         $this->registeredAt = $registeredAt;
 
@@ -294,25 +299,58 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImageFile(?File $file = null){
         $this->imageFile = $file;
         if($file){
-            $this->updatedAt = new \DateTime();
+            $this->updatedAt = new DateTime();
         }
     }
 
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
+    public function serialize(): ?string
+    {
+        return serialize(array(
+            $this->id,
+            $this->nickname,
+            $this->roles,
+            $this->password,
+            $this->email,
+            $this->about,
+            $this->registeredAt,
+            $this->petshops,
+            $this->horseSchleiches,
+            $this->imageName,
+            $this->updatedAt
+        ));
+    }
+
+    public function unserialize($data)
+    {
+        list(
+            $this->id,
+            $this->nickname,
+            $this->roles,
+            $this->password,
+            $this->email,
+            $this->about,
+            $this->registeredAt,
+            $this->petshops,
+            $this->horseSchleiches,
+            $this->imageName,
+            $this->updatedAt
+            ) = unserialize($data);
+    }
 }

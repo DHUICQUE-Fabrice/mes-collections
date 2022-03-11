@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\PetshopRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -21,74 +22,74 @@ class Petshop
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private DateTime $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picture;
+    private string $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $biography;
+    private string $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=PetshopSize::class, inversedBy="petshops")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $size;
+    private ?PetshopSize $size;
 
     /**
      * @ORM\ManyToOne(targetEntity=PetshopSpecies::class, inversedBy="petshops")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $species;
+    private ?PetshopSpecies $species;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="petshops")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private ?User $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=ObjectFamily::class, inversedBy="petshop")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $objectFamily;
+    private ?ObjectFamily $objectFamily;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string|null
      */
-    private $imageName = "placeholder_petshop.png";
+    private ?string $imageName = "placeholder_petshop.png";
 
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
      * @var File|null
      */
-    private $imageFile;
+    private ?File $imageFile;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -96,12 +97,12 @@ class Petshop
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -214,12 +215,12 @@ class Petshop
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -229,11 +230,11 @@ class Petshop
     public function setImageFile(?File $file = null){
         $this->imageFile = $file;
         if($file){
-            $this->updatedAt = new \DateTime();
+            $this->updatedAt = new DateTime();
         }
     }
 
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
