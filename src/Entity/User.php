@@ -328,11 +328,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             $this->getRoles(),
             $this->getPassword(),
             $this->getEmail(),
-            $this->getRegisteredAt(),
-            $this->getPetshops(),
-            $this->getHorseSchleiches(),
-            $this->getImageName(),
-            $this->getUpdatedAt()
         ));
     }
 
@@ -344,11 +339,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             $this->roles,
             $this->password,
             $this->email,
-            $this->registeredAt,
-            $this->petshops,
-            $this->horseSchleiches,
-            $this->imageName,
-            $this->updatedAt
             ) = unserialize($data);
     }
 }
