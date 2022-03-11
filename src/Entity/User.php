@@ -325,7 +325,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return serialize(array(
             $this->getId(),
             $this->getNickname(),
-            $this->getRoles(),
             $this->getPassword(),
             $this->getEmail(),
         ));
@@ -336,7 +335,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         list(
             $this->id,
             $this->nickname,
-            $this->roles,
             $this->password,
             $this->email,
             ) = unserialize($data);
