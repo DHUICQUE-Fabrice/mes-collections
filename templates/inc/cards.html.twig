@@ -9,7 +9,7 @@
                         {% elseif thisClass == "horse_schleich" %}
                             <a href="{{ path('horse_schleich_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
                         {% endif %}
-                            <img src="{{ vich_uploader_asset(item, 'imageFile')}}" alt="{{ item.name }}" />
+{#                            <img src="{{ vich_uploader_asset(item, 'imageFile')}}" alt="{{ item.name }}" />#}
                             </a>
                 </div>
                 <div class="text-container">

@@ -4,16 +4,12 @@ namespace App\Entity;
 
 use App\Repository\PetshopRepository;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=PetshopRepository::class)
- * @Vich\Uploadable()
-
  */
 class Petshop
 {
@@ -69,26 +65,17 @@ class Petshop
     private $objectFamily;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string|null
+     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="petshop", cascade={"persist", "remove"})
      */
-    private $imageName = "placeholder_petshop.png";
-
-
-    /**
-     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updatedAt;
+    private $avatar;
 
 
     public function __construct()
     {
+        $avatar = new Avatar();
+        $avatar->setAvatarName("placeholder_petshop.png");
+        $avatar->setUpdatedAt(new DateTime());
+        $this->setAvatar($avatar);
         $this->setCreatedAt(new DateTime());
     }
 
@@ -203,40 +190,26 @@ class Petshop
         return $this->getName();
     }
 
-    public function getImageName()
+    public function getAvatar(): ?Avatar
     {
-        return $this->imageName;
+        return $this->avatar;
     }
 
-    public function setImageName($imageName)
+    public function setAvatar(?Avatar $avatar): self
     {
-        $this->imageName = $imageName;
-
-        return $this;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function setImageFile($file = null){
-        $this->imageFile = $file;
-        if($file){
-            $this->updatedAt = new DateTime();
+        // unset the owning side of the relation if necessary
+        if ($avatar === null && $this->avatar !== null) {
+            $this->avatar->setPetshop(null);
         }
-    }
 
-    public function getImageFile()
-    {
-        return $this->imageFile;
+        // set the owning side of the relation if necessary
+        if ($avatar !== null && $avatar->getPetshop() !== $this) {
+            $avatar->setPetshop($this);
+        }
+
+        $this->avatar = $avatar;
+
+        return $this;
     }
 
 }

@@ -21,12 +21,12 @@ class HorseSchleichType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('imageFile', VichImageType::class, [
-                'label'=>'Veuillez ajouter une photo (facultatif, maximum 2Mb)',
-                'required'=>false,
-                'allow_delete' => false,
-                'download_link' => false
-            ])
+//            ->add('imageFile', VichImageType::class, [
+//                'label'=>'Veuillez ajouter une photo (facultatif, maximum 2Mb)',
+//                'required'=>false,
+//                'allow_delete' => false,
+//                'download_link' => false
+//            ])
             ->add('name', null, [
                 'label'=>'Nom : '
             ])

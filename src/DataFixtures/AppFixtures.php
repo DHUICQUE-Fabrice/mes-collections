@@ -66,7 +66,6 @@ class AppFixtures extends Fixture
         $user->setEmail('admin@admin.fr')
             ->setNickname('Aelhan')
             ->setRegisteredAt($faker->dateTimeBetween('- 1 year', 'now'))
-            ->setImageName('avatar-placeholder.png')
             ->setRoles(['ROLE_ADMIN']);
         $password =  $this->encoder->hashPassword($user, $user->getNickname());
         $user->setPassword($password);

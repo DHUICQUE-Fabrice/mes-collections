@@ -8,16 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
- * @Vich\Uploadable()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -71,25 +68,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $horseSchleiches;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string|null
+     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="user", cascade={"persist", "remove"})
      */
-    private $imageName = "placeholder_avatar.png";
-
-    /**
-     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
-     * @var File|null
-     * @Ignore
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updatedAt;
+    private $avatar;
 
     public function __construct()
     {
+        $avatar = new Avatar();
+        $avatar->setAvatarName("placeholder_avatar.png");
+        $avatar->setUpdatedAt(new DateTime());
+        $this->setAvatar($avatar);
         $this->petshops = new ArrayCollection();
         $this->horseSchleiches = new ArrayCollection();
         $this->setRegisteredAt(new DateTime());
@@ -282,38 +270,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getNickname();
     }
 
-    public function getImageName()
+
+    public function getAvatar(): ?Avatar
     {
-        return $this->imageName;
+        return $this->avatar;
     }
 
-    public function setImageName($imageName)
+    public function setAvatar(?Avatar $avatar): self
     {
-        $this->imageName = $imageName;
-
-        return $this;
-    }
-
-    public function setImageFile($file = null){
-        $this->imageFile = $file;
-        if($file){
-            $this->updatedAt = new DateTime();
+        // unset the owning side of the relation if necessary
+        if ($avatar === null && $this->avatar !== null) {
+            $this->avatar->setUser(null);
         }
-    }
 
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
+        // set the owning side of the relation if necessary
+        if ($avatar !== null && $avatar->getUser() !== $this) {
+            $avatar->setUser($this);
+        }
 
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
+        $this->avatar = $avatar;
 
         return $this;
     }

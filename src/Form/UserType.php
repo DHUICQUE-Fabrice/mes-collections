@@ -24,11 +24,11 @@ class UserType extends AbstractType
                     'rows' => 5
                 )
             ])
-            ->add('imageFile', VichImageType::class,[
-                'label' => 'Avatar',
-                'allow_delete' => false,
-                'download_link' => false
-            ])
+//            ->add('imageFile', VichImageType::class,[
+//                'label' => 'Avatar',
+//                'allow_delete' => false,
+//                'download_link' => false
+//            ])
         ;
     }
 
