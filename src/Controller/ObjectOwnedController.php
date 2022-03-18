@@ -65,8 +65,13 @@ class ObjectOwnedController extends AbstractController
         if($petshop->getUser() !== $this->getUser()){
             return $this->render('home/index.html.twig');
         }
-
-
+        $petshopForm = $this->createForm(PetshopType::class, $petshop);
+        $petshopForm->handleRequest($request);
+        if ($petshopForm->isSubmitted() && $petshopForm->isValid()){
+            $entityManager->persist($petshop);
+            $entityManager->flush();
+            return $this->redirectToRoute('petshop_details', $id, $petshop->getSlug());
+        }
     }
 
 
