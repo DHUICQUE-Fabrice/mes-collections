@@ -28,12 +28,13 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    Aws\S3\S3Client:
+    aws_s3_client:
+        class: Aws\S3\S3Client
         arguments:
             - version: 'latest'
-              region: 'eu-west-3'
-              endpoint: '%env(STACKHERO_MINIO_HOST)%'
-              use_path_style_endpoint: true
+              region: 'eu-east-1'
+              endpoint: 'gq4bqq.stackhero-network.com:4443'
+#              use_path_style_endpoint: true
               credentials:
                   key: '%env(STACKHERO_MINIO_ROOT_ACCESS_KEY)%'
                   secret: '%env(STACKHERO_MINIO_ROOT_SECRET_KEY)%'

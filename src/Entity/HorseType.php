@@ -35,16 +35,26 @@ class HorseType
         $this->horseSchleiches = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -60,6 +70,10 @@ class HorseType
         return $this->horseSchleiches;
     }
 
+    /**
+     * @param $horseSchleich
+     * @return $this
+     */
     public function addHorseSchleich($horseSchleich)
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
@@ -70,6 +84,10 @@ class HorseType
         return $this;
     }
 
+    /**
+     * @param $horseSchleich
+     * @return $this
+     */
     public function removeHorseSchleich($horseSchleich)
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
@@ -80,6 +98,9 @@ class HorseType
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();

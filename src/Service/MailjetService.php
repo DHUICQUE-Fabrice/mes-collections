@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Service;
 
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;

@@ -41,16 +41,26 @@ class ObjectFamily
         $this->horseSchleich = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -66,6 +76,10 @@ class ObjectFamily
         return $this->petshop;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function addPetshop($petshop)
     {
         if (!$this->petshop->contains($petshop)) {
@@ -75,6 +89,10 @@ class ObjectFamily
         return $this;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function removePetshop($petshop)
     {
         if ($this->petshop->removeElement($petshop)) {
@@ -93,6 +111,10 @@ class ObjectFamily
         return $this->horseSchleich;
     }
 
+    /**
+     * @param $horseSchleich
+     * @return $this
+     */
     public function addHorseSchleich($horseSchleich)
     {
         if (!$this->horseSchleich->contains($horseSchleich)) {
@@ -103,6 +125,10 @@ class ObjectFamily
         return $this;
     }
 
+    /**
+     * @param $horseSchleich
+     * @return $this
+     */
     public function removeHorseSchleich($horseSchleich)
     {
         if ($this->horseSchleich->removeElement($horseSchleich)) {
@@ -114,6 +140,9 @@ class ObjectFamily
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();

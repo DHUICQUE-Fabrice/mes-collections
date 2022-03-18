@@ -4,10 +4,10 @@ vich_uploader:
 
     mappings:
         uploaded_images:
-            uri_prefix: '%env(STACKHERO_MINIO_PATH)%'
+            uri_prefix: '/mes-collections'
             upload_destination: aws.storage
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-            inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+#            inject_on_load: false
+#            delete_on_update: true
+#            delete_on_remove: true
 

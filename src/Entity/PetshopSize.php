@@ -60,6 +60,10 @@ class PetshopSize
         return $this->petshops;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function addPetshop($petshop)
     {
         if (!$this->petshops->contains($petshop)) {
@@ -70,6 +74,10 @@ class PetshopSize
         return $this;
     }
 
+    /**
+     * @param Petshop $petshop
+     * @return $this
+     */
     public function removePetshop(Petshop $petshop)
     {
         if ($this->petshops->removeElement($petshop)) {
@@ -81,6 +89,9 @@ class PetshopSize
     }
 
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();

@@ -34,7 +34,7 @@ class UserCrudController extends AbstractCrudController
             AssociationField::new('petshops')->onlyOnIndex(),
             AssociationField::new('horseSchleiches')->onlyOnIndex(),
             DateField::new('registeredAt')->hideOnForm(),
-           // AssociationField::new('avatar')
+           AssociationField::new('imageFile')
         ];
     }
 

@@ -35,16 +35,26 @@ class PetshopSpecies
         $this->petshops = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -60,6 +70,10 @@ class PetshopSpecies
         return $this->petshops;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function addPetshop($petshop)
     {
         if (!$this->petshops->contains($petshop)) {
@@ -70,6 +84,10 @@ class PetshopSpecies
         return $this;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function removePetshop($petshop)
     {
         if ($this->petshops->removeElement($petshop)) {
@@ -81,6 +99,9 @@ class PetshopSpecies
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();

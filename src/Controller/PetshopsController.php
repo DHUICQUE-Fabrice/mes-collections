@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Petshop;
 use App\Repository\PetshopRepository;
-use App\Services\PaginatorService;
+use App\Service\PaginatorService;
 use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

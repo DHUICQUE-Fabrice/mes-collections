@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -68,31 +68,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $horseSchleiches;
 
     /**
-     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=ImageFile::class, cascade={"persist", "remove"}, orphanRemoval="true")
      */
-    private $avatar;
+    private $imageFile;
 
     public function __construct()
     {
-        $avatar = new Avatar();
-        $avatar->setAvatarName("placeholder_avatar.png");
-        $avatar->setUpdatedAt(new DateTime());
-        $this->setAvatar($avatar);
+        $this->imageFile = new ImageFile();
+        $this->imageFile->setImageName('placeholder_avatar.png');
         $this->petshops = new ArrayCollection();
         $this->horseSchleiches = new ArrayCollection();
         $this->setRegisteredAt(new DateTime());
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getNickname()
     {
         return $this->nickname;
     }
 
+    /**
+     * @param $nickname
+     * @return $this
+     */
     public function setNickname($nickname)
     {
         $this->nickname = $nickname;
@@ -129,6 +137,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param $roles
+     * @return $this
+     */
     public function setRoles($roles)
     {
         $this->roles = $roles;
@@ -145,6 +157,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+    /**
+     * @param $password
+     * @return $this
+     */
     public function setPassword($password)
     {
         $this->password = $password;
@@ -172,11 +188,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * @param $email
+     * @return $this
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -184,11 +207,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAbout()
     {
         return $this->about;
     }
 
+    /**
+     * @param $about
+     * @return $this
+     */
     public function setAbout($about)
     {
         $this->about = $about;
@@ -196,11 +226,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRegisteredAt()
     {
         return $this->registeredAt;
     }
 
+    /**
+     * @param $registeredAt
+     * @return $this
+     */
     public function setRegisteredAt($registeredAt)
     {
         $this->registeredAt = $registeredAt;
@@ -216,6 +253,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->petshops;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function addPetshop($petshop)
     {
         if (!$this->petshops->contains($petshop)) {
@@ -225,6 +266,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param $petshop
+     * @return $this
+     */
     public function removePetshop($petshop)
     {
         if ($this->petshops->removeElement($petshop)) {
@@ -244,6 +289,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->horseSchleiches;
     }
 
+    /**
+     * @param $horseSchleich
+     * @return $this
+     */
     public function addHorseSchleich($horseSchleich)
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
@@ -253,6 +302,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param $horseSchleich
+     * @return $this
+     */
     public function removeHorseSchleich($horseSchleich)
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
@@ -265,32 +318,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getNickname();
     }
 
 
-    public function getAvatar(): ?Avatar
+    /**
+     * @return ImageFile|null
+     */
+    public function getImageFile(): ?ImageFile
     {
-        return $this->avatar;
+        return $this->imageFile;
     }
 
-    public function setAvatar(?Avatar $avatar): self
+    /**
+     * @param ImageFile|null $imageFile
+     * @return $this
+     */
+    public function setImageFile(?ImageFile $imageFile): self
     {
-        // unset the owning side of the relation if necessary
-        if ($avatar === null && $this->avatar !== null) {
-            $this->avatar->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($avatar !== null && $avatar->getUser() !== $this) {
-            $avatar->setUser($this);
-        }
-
-        $this->avatar = $avatar;
+        $this->imageFile = $imageFile;
 
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->nickname,
+            $this->email,
+            $this->password,
+            $this->about,
+            $this->roles,
+            $this->registeredAt,
+            $this->petshops,
+            $this->horseSchleiches
+        ]);    }
+
+    /**
+     * @param $data
+     * @return void
+     */
+    public function unserialize($data)
+    {
+        [
+            $this->id,
+            $this->nickname,
+            $this->email,
+            $this->password,
+            $this->about,
+            $this->roles,
+            $this->registeredAt,
+            $this->petshops,
+            $this->horseSchleiches
+        ] = \unserialize($data, [self::class]);    }
 }

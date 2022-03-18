@@ -9,7 +9,7 @@
             <button type="submit" name="edit" class="btn btn-primary">Modifier mon profil</button>
         </form>
     {% endif %}
-{#    <img src="{{ vich_uploader_asset(avatar, 'avatarFile')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">#}
+    <img src="{{ vich_uploader_asset(avatar, 'imageFile')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
     {% if app.user.about %}
         <p class="text-black text-center">{{ user.about }}</p>
     {% endif %}

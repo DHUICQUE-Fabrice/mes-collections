@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\HorseSchleichRepository;
 use App\Repository\PetshopRepository;
 use App\Repository\UserRepository;
+use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
+use League\Flysystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +43,7 @@ class UserController extends AbstractController
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,
-            'avatar' => $user->getAvatar(),
+            'avatar' => $user->getImageFile(),
             'items' => $items
         ]);
     }
@@ -59,20 +61,32 @@ class UserController extends AbstractController
         if($user !== $userChecked){
             return $this->render('home/index.html.twig');
         }
-        $userForm = $this->createForm(UserType::class, $user);
+        $userForm = $this->createForm(UserType::class, $userChecked);
 
         $userForm->handleRequest($request);
-
         if ($userForm->isSubmitted() && $userForm->isValid()){
-            if ($userChecked->getNickname() !== $userForm->get('nickname')->getData()){
-                $userChecked->setNickname($userForm->get('nickname')->getData());
-            }
-            if ($userChecked->getEmail() !== $userForm->get('email')->getData()){
-                $userChecked->setEmail($userForm->get('email')->getData());
-            }
-            if ($userChecked->getAbout() !== $userForm->get('about')->getData()){
-                $userChecked->setAbout($userForm->get('about')->getData());
-            }
+
+//            $client = new S3Client([
+//                'credentials' => [
+//                    'key'    => 'minioUser',
+//                    'secret' => 'LOuhNpUgz6wOsYTU4Hrf6enEibV3yWOBxkupTdkm',
+//                ],
+//                'region' => 'eu-west-3',
+//                'version' => 'latest',
+//            ]);
+//
+//            $adapter = new AwsS3V3Adapter($client, 'mes-collections',
+//                'https://u7aw0j.stackhero-network.com/',null, null,
+//                [
+//                'StorageClass'  =>  'REDUCED_REDUNDANCY',
+//            ]);
+//
+//            $filesystem = new Filesystem($adapter);
+//            $filesystem->write('https://u7aw0j.stackhero-network.com/mes-collections', $userForm->getData());
+//
+//            dd($adapter, $filesystem);
+
+
             $entityManager->persist($userChecked);
             $entityManager->flush();
             return $this->redirectToRoute('profile', [
@@ -81,7 +95,6 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', [
-            'user' => $user,
             'userForm' => $userForm->createView()
         ]);
     }

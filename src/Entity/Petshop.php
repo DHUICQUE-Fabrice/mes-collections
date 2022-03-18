@@ -6,7 +6,6 @@ use App\Repository\PetshopRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=PetshopRepository::class)
@@ -65,30 +64,37 @@ class Petshop
     private $objectFamily;
 
     /**
-     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="petshop", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=ImageFile::class, cascade={"persist", "remove"}, orphanRemoval="true")
      */
-    private $avatar;
-
+    private $imageFile;
 
     public function __construct()
     {
-        $avatar = new Avatar();
-        $avatar->setAvatarName("placeholder_petshop.png");
-        $avatar->setUpdatedAt(new DateTime());
-        $this->setAvatar($avatar);
+        $this->imageFile = new ImageFile();
+        $this->imageFile->setImageName('placeholder_petshop.png');
         $this->setCreatedAt(new DateTime());
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param DateTime $createdAt
+     * @return $this
+     */
     public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
@@ -96,11 +102,18 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPicture()
     {
         return $this->picture;
     }
 
+    /**
+     * @param $picture
+     * @return $this
+     */
     public function setPicture($picture)
     {
         $this->picture = $picture;
@@ -108,11 +121,18 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -120,11 +140,18 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getBiography()
     {
         return $this->biography;
     }
 
+    /**
+     * @param $biography
+     * @return $this
+     */
     public function setBiography($biography)
     {
         $this->biography = $biography;
@@ -132,11 +159,18 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSize()
     {
         return $this->size;
     }
 
+    /**
+     * @param $size
+     * @return $this
+     */
     public function setSize($size)
     {
         $this->size = $size;
@@ -144,11 +178,18 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSpecies()
     {
         return $this->species;
     }
 
+    /**
+     * @param $species
+     * @return $this
+     */
     public function setSpecies($species)
     {
         $this->species = $species;
@@ -156,16 +197,26 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getSlug()
     {
         return (new Slugify())->slugify($this->name);
     }
 
+    /**
+     * @return mixed
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @param $user
+     * @return $this
+     */
     public function setUser($user)
     {
         $this->user = $user;
@@ -173,11 +224,18 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getObjectFamily()
     {
         return $this->objectFamily;
     }
 
+    /**
+     * @param $objectFamily
+     * @return $this
+     */
     public function setObjectFamily($objectFamily): self
     {
         $this->objectFamily = $objectFamily;
@@ -185,29 +243,31 @@ class Petshop
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
-    public function getAvatar(): ?Avatar
+
+
+    /**
+     * @return ImageFile|null
+     */
+    public function getImageFile(): ?ImageFile
     {
-        return $this->avatar;
+        return $this->imageFile;
     }
 
-    public function setAvatar(?Avatar $avatar): self
+    /**
+     * @param ImageFile|null $imageFile
+     * @return $this
+     */
+    public function setImageFile(?ImageFile $imageFile): self
     {
-        // unset the owning side of the relation if necessary
-        if ($avatar === null && $this->avatar !== null) {
-            $this->avatar->setPetshop(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($avatar !== null && $avatar->getPetshop() !== $this) {
-            $avatar->setPetshop($this);
-        }
-
-        $this->avatar = $avatar;
+        $this->imageFile = $imageFile;
 
         return $this;
     }

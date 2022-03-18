@@ -4,6 +4,8 @@ flysystem:
         aws.storage:
             adapter: 'aws'
             options:
-                client: Aws\S3\S3Client
+                client: 'aws_s3_client'
                 bucket: '%env(STACKHERO_MINIO_BUCKET)%'
+                #prefix: '%env(STACKHERO_MINIO_HOST)%'
+#                streamReads: true
 

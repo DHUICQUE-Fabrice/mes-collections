@@ -6,7 +6,6 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserType extends AbstractType
 {
@@ -20,15 +19,10 @@ class UserType extends AbstractType
             ->add('about', null, [
                 'label' => "A propos de moi",
                 'attr' => array(
-                    'placeholder' => 'J\'adore collectionner les Petshops !',
+                    'placeholder' => 'J\'adore collectionner !',
                     'rows' => 5
                 )
-            ])
-//            ->add('imageFile', VichImageType::class,[
-//                'label' => 'Avatar',
-//                'allow_delete' => false,
-//                'download_link' => false
-//            ])
+            ])->add('imageFile', ImageFileType::class)
         ;
     }
 

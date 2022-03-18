@@ -70,29 +70,39 @@ class HorseSchleich
     private $objectFamily;
 
     /**
-     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="horseSchleich", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=ImageFile::class, cascade={"persist", "remove"}, orphanRemoval="true")
      */
-    private $avatar;
+    private $imageFile;
+
+
 
     public function __construct()
     {
-        $avatar = new Avatar();
-        $avatar->setAvatarName("placeholder_horseschleich.png");
-        $avatar->setUpdatedAt(new DateTime());
-        $this->setAvatar($avatar);
+        $this->imageFile = new ImageFile();
+        $this->imageFile->setImageName('placeholder_horseschleich.png');
         $this->setCreatedAt(new DateTime());
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param $createdAt
+     * @return $this
+     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
@@ -100,11 +110,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPicture()
     {
         return $this->picture;
     }
 
+    /**
+     * @param $picture
+     * @return $this
+     */
     public function setPicture($picture)
     {
         $this->picture = $picture;
@@ -112,11 +129,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -124,11 +148,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getBiography()
     {
         return $this->biography;
     }
 
+    /**
+     * @param $biography
+     * @return $this
+     */
     public function setBiography($biography)
     {
         $this->biography = $biography;
@@ -136,11 +167,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * @param $type
+     * @return $this
+     */
     public function setType($type)
     {
         $this->type = $type;
@@ -148,11 +186,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCoat()
     {
         return $this->coat;
     }
 
+    /**
+     * @param $coat
+     * @return $this
+     */
     public function setCoat($coat)
     {
         $this->coat = $coat;
@@ -160,11 +205,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSpecies()
     {
         return $this->species;
     }
 
+    /**
+     * @param $species
+     * @return $this
+     */
     public function setSpecies($species)
     {
         $this->species = $species;
@@ -172,16 +224,27 @@ class HorseSchleich
         return $this;
     }
 
+
+    /**
+     * @return string
+     */
     public function getSlug()
     {
         return (new Slugify())->slugify($this->name);
     }
 
+    /**
+     * @return mixed
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @param $user
+     * @return $this
+     */
     public function setUser($user)
     {
         $this->user = $user;
@@ -189,11 +252,18 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getObjectFamily()
     {
         return $this->objectFamily;
     }
 
+    /**
+     * @param $objectFamily
+     * @return $this
+     */
     public function setObjectFamily($objectFamily)
     {
         $this->objectFamily = $objectFamily;
@@ -201,30 +271,32 @@ class HorseSchleich
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
-    public function getAvatar(): ?Avatar
+
+    /**
+     * @return ImageFile|null
+     */
+    public function getImageFile(): ?ImageFile
     {
-        return $this->avatar;
+        return $this->imageFile;
     }
 
-    public function setAvatar(?Avatar $avatar): self
+    /**
+     * @param ImageFile|null $imageFile
+     * @return $this
+     */
+    public function setImageFile(?ImageFile $imageFile): self
     {
-        // unset the owning side of the relation if necessary
-        if ($avatar === null && $this->avatar !== null) {
-            $this->avatar->setHorseSchleich(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($avatar !== null && $avatar->getHorseSchleich() !== $this) {
-            $avatar->setHorseSchleich($this);
-        }
-
-        $this->avatar = $avatar;
+        $this->imageFile = $imageFile;
 
         return $this;
     }
+
 }
