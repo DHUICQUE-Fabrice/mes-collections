@@ -3,10 +3,19 @@
     {{ parent() }} | {{ petshop.name }}
 {% endblock %}
 {% block body %}
+    {% if app.user == petshop.user %}
+        <form action="{{ path('editProfile', {nickname: petshop.user.nickname}) }}">
+            <button type="submit" name="edit" class="btn btn-primary">Modifier mon profil</button>
+        </form>
+    {% endif %}
     <div class="card-flyer">
         <div class="text-box">
             <div class="image-box">
-{#                <img src="{{ vich_uploader_asset(petshop, 'imageFile') }}" alt="{{ petshop.name }}" width="250"/>#}
+                {% if petshop.imageFile %}
+                <img src="{{ vich_uploader_asset(petshop.imageFile, 'imageFile') }}" alt="{{ petshop.name }}" width="250"/>
+                {% else %}
+                <img src="{{ asset('/uploads/images/placeholder_petshop.png')}}" alt="{{ petshop.name }}" width="250"/>
+                {% endif %}
             </div>
             <div class="text-container">
                 <h6>{{ petshop.name }}</h6>

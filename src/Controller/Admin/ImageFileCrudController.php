@@ -26,8 +26,8 @@ class ImageFileCrudController extends AbstractCrudController
                 ->setFormType(VichImageType::class)
                 ->onlyOnForms(),
             ImageField::new('imageName', 'Fichier')
-                ->setBasePath('https://gq4bqq.stackhero-network.com/mes-collections/')
-                ->hideOnForm()
+                ->setBasePath('/uploads/images')
+                ->onlyOnIndex()
 
         ];
     }

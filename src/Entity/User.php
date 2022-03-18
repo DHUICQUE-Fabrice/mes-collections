@@ -74,8 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     public function __construct()
     {
-        $this->imageFile = new ImageFile();
-        $this->imageFile->setImageName('placeholder_avatar.png');
         $this->petshops = new ArrayCollection();
         $this->horseSchleiches = new ArrayCollection();
         $this->setRegisteredAt(new DateTime());

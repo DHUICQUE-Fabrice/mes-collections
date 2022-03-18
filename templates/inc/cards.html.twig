@@ -6,10 +6,18 @@
                 <div class="image-box">
                         {% if thisClass == "petshop" %}
                             <a href="{{ path('petshop_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
+                            {% if not item.imageFile %}
+                                <img src="{{ asset('/uploads/images/placeholder_petshop.png')}}" alt="{{ item.name }}" />
+                            {% endif %}
                         {% elseif thisClass == "horse_schleich" %}
                             <a href="{{ path('horse_schleich_details', {slug: item.slug, id: item.id})}}" title="{{ item.name }}">
+                                {% if not item.imageFile %}
+                                    <img src="{{ asset('/uploads/images/placeholder_horseschleich.png')}}" alt="{{ item.name }}" />
+                                {% endif %}
                         {% endif %}
-{#                            <img src="{{ vich_uploader_asset(item, 'imageFile')}}" alt="{{ item.name }}" />#}
+                        {% if item.imageFile %}
+                            <img src="{{ vich_uploader_asset(item.imageFile, 'imageFile')}}" alt="{{ item.name }}" />
+                        {% endif %}
                             </a>
                 </div>
                 <div class="text-container">

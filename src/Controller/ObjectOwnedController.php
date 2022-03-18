@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Form\HorseSchleichType;
 use App\Form\PetshopType;
 use App\Repository\ObjectFamilyRepository;
+use App\Repository\PetshopRepository;
+use App\Repository\PetshopSizeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +53,20 @@ class ObjectOwnedController extends AbstractController
         return $this->render('create/petshop.html.twig', [
             'petshopForm'=>$petshopForm->createView()
         ]);
+    }
+
+    /**
+     * @Route ("/modifier/petshop/{id}", name="edit_petshop")
+     */
+    public function editPetshop(int $id, Request $request,
+                                EntityManagerInterface $entityManager,
+                                PetshopRepository $petshopRepository){
+        $petshop = $petshopRepository->find($id);
+        if($petshop->getUser() !== $this->getUser()){
+            return $this->render('home/index.html.twig');
+        }
+
+
     }
 
 

@@ -70,8 +70,6 @@ class Petshop
 
     public function __construct()
     {
-        $this->imageFile = new ImageFile();
-        $this->imageFile->setImageName('placeholder_petshop.png');
         $this->setCreatedAt(new DateTime());
     }
 

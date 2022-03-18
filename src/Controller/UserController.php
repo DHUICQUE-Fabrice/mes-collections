@@ -65,28 +65,6 @@ class UserController extends AbstractController
 
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()){
-
-//            $client = new S3Client([
-//                'credentials' => [
-//                    'key'    => 'minioUser',
-//                    'secret' => 'LOuhNpUgz6wOsYTU4Hrf6enEibV3yWOBxkupTdkm',
-//                ],
-//                'region' => 'eu-west-3',
-//                'version' => 'latest',
-//            ]);
-//
-//            $adapter = new AwsS3V3Adapter($client, 'mes-collections',
-//                'https://u7aw0j.stackhero-network.com/',null, null,
-//                [
-//                'StorageClass'  =>  'REDUCED_REDUNDANCY',
-//            ]);
-//
-//            $filesystem = new Filesystem($adapter);
-//            $filesystem->write('https://u7aw0j.stackhero-network.com/mes-collections', $userForm->getData());
-//
-//            dd($adapter, $filesystem);
-
-
             $entityManager->persist($userChecked);
             $entityManager->flush();
             return $this->redirectToRoute('profile', [

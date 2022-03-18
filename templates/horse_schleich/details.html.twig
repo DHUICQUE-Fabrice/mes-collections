@@ -3,10 +3,19 @@
     {{ parent() }} | {{ schleich.name }}
 {% endblock %}
 {% block body %}
+    {% if app.user == schleich.user %}
+        <form action="{{ path('editProfile', {nickname: schleich.user.nickname}) }}">
+            <button type="submit" name="edit" class="btn btn-primary">Modifier mon profil</button>
+        </form>
+    {% endif %}
     <div class="card-flyer">
         <div class="text-box">
             <div class="image-box">
-{#                <img src="{{ vich_uploader_asset(schleich, 'imageFile')}}" alt="{{ schleich.name }}" width="250"/>#}
+                {% if schleich.imageFile %}
+                <img src="{{ vich_uploader_asset(schleich.imageFile, 'imageFile')}}" alt="{{ schleich.name }}" width="250"/>
+                {% else %}
+                <img src="{{ asset('/uploads/images/placeholder_horseschleich.png')}}" alt="{{ schleich.name }}" width="250"/>
+                {% endif %}
             </div>
             <div class="text-container">
                 <h6>{{ schleich.name }}</h6>

@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    uploaded_images: '%env(STACKHERO_MINIO_HOST)%'
+    uploaded_images: /uploads/images
 
 services:
     # default configuration for services in *this* file
@@ -27,16 +27,5 @@ services:
     App\Listener\ImageCacheSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
-
-    aws_s3_client:
-        class: Aws\S3\S3Client
-        arguments:
-            - version: 'latest'
-              region: 'eu-east-1'
-              endpoint: 'gq4bqq.stackhero-network.com:4443'
-#              use_path_style_endpoint: true
-              credentials:
-                  key: '%env(STACKHERO_MINIO_ROOT_ACCESS_KEY)%'
-                  secret: '%env(STACKHERO_MINIO_ROOT_SECRET_KEY)%'
 
 

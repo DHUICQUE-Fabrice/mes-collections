@@ -6,28 +6,18 @@ use App\Entity\HorseCoat;
 use App\Entity\HorseSchleich;
 use App\Entity\HorseSpecies;
 use App\Entity\HorseType;
-use Doctrine\DBAL\Types\StringType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Entity\File;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class HorseSchleichType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            ->add('imageFile', VichImageType::class, [
-//                'label'=>'Veuillez ajouter une photo (facultatif, maximum 2Mb)',
-//                'required'=>false,
-//                'allow_delete' => false,
-//                'download_link' => false
-//            ])
-            ->add('name', null, [
+            ->add('name', TextareaType::class, [
                 'label'=>'Nom : '
             ])
             ->add('biography', TextareaType::class, [
@@ -50,7 +40,7 @@ class HorseSchleichType extends AbstractType
                 'choice_label'=>'name',
                 'label'=>'Race : ',
                 'placeholder'=>'Sélectionnez'
-            ])
+            ])->add('imageFile', ImageFileType::class)
         ;
     }
 

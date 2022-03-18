@@ -78,8 +78,6 @@ class HorseSchleich
 
     public function __construct()
     {
-        $this->imageFile = new ImageFile();
-        $this->imageFile->setImageName('placeholder_horseschleich.png');
         $this->setCreatedAt(new DateTime());
     }
 
