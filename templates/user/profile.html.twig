@@ -9,8 +9,12 @@
             <button type="submit" name="edit" class="btn btn-primary">Modifier mon profil</button>
         </form>
     {% endif %}
-    <img src="{{ vich_uploader_asset(avatar, 'imageFile')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
-    {% if app.user.about %}
+        {% if app.user.imageFile %}
+    <img src="{{ vich_uploader_asset(app.user.imageFile, 'imageFile')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
+        {% else %}
+            <img src="{{ asset('uploads/images/placeholder_avatar.png')}}" alt="{{ user.nickname }}" title="{{ user.nickname }}" width="250">
+        {% endif %}
+        {% if app.user.about %}
         <p class="text-black text-center">{{ user.about }}</p>
     {% endif %}
     <p class="text-center text-black">{{ user.nickname }} est membre depuis le {{ user.registeredAt | date('d/m/Y')}}, il a {{ user.petshops.count }} petshops et {{ user.horseSchleiches.count }} chevaux Schleich, les voici :</p>
@@ -24,14 +28,14 @@
                 {% elseif item in user.horseSchleiches %}
                     {% set thisClass='horse_schleich' %}
                     {% endif %}
-                {% include 'inc/cards.html.twig' %}
+                {% include 'inc/_cards.html.twig' %}
             {% endfor %}
         </div>
     </div>
 </div>
     <div class="d-flex justify-content-center">
         {% do items.setPageRange(4) %}
-        {{ knp_pagination_render(items, 'inc/pagination.html.twig') }}
+        {{ knp_pagination_render(items, 'inc/_pagination.html.twig') }}
     </div>
 
 {% endblock %}

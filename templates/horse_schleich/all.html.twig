@@ -9,14 +9,14 @@
         <div class="row">
             {% for item in horseSchleiches %}
                 {% set thisClass = 'horse_schleich' %}
-                {% include 'inc/cards.html.twig' %}
+                {% include 'inc/_cards.html.twig' %}
             {% endfor %}
         </div>
     </div>
 </div>
 <div class="d-flex justify-content-center">
     {% do horseSchleiches.setPageRange(3) %}
-    {{ knp_pagination_render(horseSchleiches, 'inc/pagination.html.twig') }}
+    {{ knp_pagination_render(horseSchleiches, 'inc/_pagination.html.twig') }}
 </div>
 {% endblock %}
 

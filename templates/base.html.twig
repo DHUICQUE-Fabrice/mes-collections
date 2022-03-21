@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app.request.locale }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
     <meta name="google-site-verification" content="8yosMUkg4oox9P861cK6cdTE_h1aP5jPJR3dfYl2wz4" />
 </head>
 <body>
-{% block header %}{% include 'inc/header.html.twig' %}{% endblock %}
+{% block header %}{% include 'inc/_header.html.twig' %}{% endblock %}
 {% for message in app.flashes('success') %}
     <div class="alert alert-success">{{ message }}</div>
 {% endfor %}
@@ -23,7 +23,7 @@
     <div class="container text-center"><h1>Site en cours de construction</h1></div>
 {% endblock %}
 <footer>
-{% block footer %}{% include 'inc/footer.html.twig' %}{% endblock %}
+{% block footer %}{% include 'inc/_footer.html.twig' %}{% endblock %}
 </footer>
 {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
 </body>
