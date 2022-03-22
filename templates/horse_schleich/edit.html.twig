@@ -1,25 +1,24 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-{{ parent() }} | Nouveau Petshop
-{% endblock %}
 
 {% block body %}
     <div class="container">
 
-        {{ form_start(petshopForm) }}
+        {{ form_start(horseSchleichForm) }}
 
-        {{ form_widget(petshopForm) }}
+        {{ form_widget(horseSchleichForm) }}
         <br>
         <div class="row">
-            <div class="col-4"></div>
+            <div class="col-8"></div>
             <div class="col-4">
                 <button type="submit" name="valid" class="btn btn-primary" onclick="this.disabled=true;this.value='Enregistrement...';this.form.submit()">Valider</button>
             </div>
-
         </div>
-        {{ form_end(petshopForm) }}
+        {{ form_end(horseSchleichForm) }}
 
     </div>
 {% endblock %}
 
+{% block title %}
+
+{% endblock %}
 

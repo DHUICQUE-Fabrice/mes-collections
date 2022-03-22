@@ -38,7 +38,6 @@ class UserCrudController extends AbstractCrudController
             AssociationField::new('horseSchleiches')->onlyOnIndex(),
             DateField::new('registeredAt')->hideOnForm(),
             CollectionField::new('imageFile', 'Fichier')->setEntryType(ImageFileType::class)
-
         ];
     }
 

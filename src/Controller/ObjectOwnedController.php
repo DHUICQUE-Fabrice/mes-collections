@@ -7,9 +7,9 @@ use App\Entity\Petshop;
 use App\Entity\User;
 use App\Form\HorseSchleichType;
 use App\Form\PetshopType;
+use App\Repository\HorseSchleichRepository;
 use App\Repository\ObjectFamilyRepository;
 use App\Repository\PetshopRepository;
-use App\Repository\PetshopSizeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,18 +62,55 @@ class ObjectOwnedController extends AbstractController
                                 EntityManagerInterface $entityManager,
                                 PetshopRepository $petshopRepository){
         $petshop = $petshopRepository->find($id);
-        if($petshop->getUser() !== $this->getUser()){
-            return $this->render('home/index.html.twig');
-        }
+
+        $this->denyAccessUnlessGranted('edit', $petshop);
+
         $petshopForm = $this->createForm(PetshopType::class, $petshop);
         $petshopForm->handleRequest($request);
         if ($petshopForm->isSubmitted() && $petshopForm->isValid()){
             $entityManager->persist($petshop);
             $entityManager->flush();
-            return $this->redirectToRoute('petshop_details', $id, $petshop->getSlug());
+            return $this->redirectToRoute('petshop_details', ['id'=>$id, 'slug'=>$petshop->getSlug()]);
         }
+        return $this->render('petshops/edit.html.twig',[
+            'petshopForm' => $petshopForm->createView()
+        ]);
     }
 
+    /**
+     * @Route ("/supprimer/petshop/{id}", name="delete_petshop")
+     */
+    public function deletePetshop(int $id,
+                                EntityManagerInterface $entityManager,
+                                PetshopRepository $petshopRepository){
+        $petshop = $petshopRepository->find($id);
+        $this->denyAccessUnlessGranted('delete', $petshop);
+        $entityManager->remove($petshop);
+        $entityManager->flush();
+        return $this->redirectToRoute('profile', ['nickname' => $petshop->getUser()->getNickName()]);
+    }
+
+    /**
+     * @Route ("/modifier/schleich/{id}", name="edit_horseschleich")
+     */
+    public function editHorseSchleich(int $id, Request $request,
+                                EntityManagerInterface $entityManager,
+                                HorseSchleichRepository $horseSchleichRepository){
+        $horseSchleich = $horseSchleichRepository->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $horseSchleich);
+
+        $horseSchleichForm = $this->createForm(HorseSchleichType::class, $horseSchleich);
+        $horseSchleichForm->handleRequest($request);
+        if ($horseSchleichForm->isSubmitted() && $horseSchleichForm->isValid()){
+            $entityManager->persist($horseSchleich);
+            $entityManager->flush();
+            return $this->redirectToRoute('horse_schleich_details', ['id'=>$id, 'slug'=>$horseSchleich->getSlug()]);
+        }
+        return $this->render('horse_schleich/edit.html.twig',[
+            'horseSchleichForm' => $horseSchleichForm->createView()
+        ]);
+    }
 
     /**
      * @Route("/nouveau/cheval-schleich", name="create_new_horseSchleich")

@@ -4,8 +4,8 @@
 {% endblock %}
 {% block body %}
     {% if app.user == petshop.user %}
-        <form action="{{ path('editProfile', {nickname: petshop.user.nickname}) }}">
-            <button type="submit" name="edit" class="btn btn-primary">Modifier mon profil</button>
+        <form action="{{ path('edit_petshop', {id: petshop.id}) }}">
+            <button type="submit" name="edit" class="btn btn-primary">Modifier {{ petshop.name }}</button>
         </form>
     {% endif %}
     <div class="card-flyer">
