@@ -77,14 +77,22 @@ class ObjectOwnedController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route ("/supprimer/petshop/{id}", name="delete_petshop")
+     * @param int $id
+     * @param EntityManagerInterface $entityManager
+     * @param PetshopRepository $petshopRepository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deletePetshop(int $id,
-                                EntityManagerInterface $entityManager,
-                                PetshopRepository $petshopRepository){
+    public function deletePetshop(int                    $id,
+                                  EntityManagerInterface $entityManager,
+                                  PetshopRepository      $petshopRepository){
         $petshop = $petshopRepository->find($id);
         $this->denyAccessUnlessGranted('delete', $petshop);
+        $image = $petshop->getImageFile();
+        $petshop->setImageFile(null);
+        $entityManager->remove($image);
         $entityManager->remove($petshop);
         $entityManager->flush();
         return $this->redirectToRoute('profile', ['nickname' => $petshop->getUser()->getNickName()]);
