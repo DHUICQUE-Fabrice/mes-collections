@@ -6,18 +6,14 @@ use App\Repository\SchleichRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=SchleichRepository::class)
+ * @Vich\Uploadable()
  */
-class HorseSchleich
+class HorseSchleich extends ImageFile
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\Column(type="datetime")
@@ -69,24 +65,9 @@ class HorseSchleich
      */
     private $objectFamily;
 
-    /**
-     * @ORM\OneToOne(targetEntity=ImageFile::class, cascade={"persist", "remove"}, orphanRemoval="true")
-     */
-    private $imageFile;
-
-
-
     public function __construct()
     {
         $this->setCreatedAt(new DateTime());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -276,25 +257,4 @@ class HorseSchleich
     {
         return $this->getName();
     }
-
-
-    /**
-     * @return ImageFile|null
-     */
-    public function getImageFile(): ?ImageFile
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param ImageFile|null $imageFile
-     * @return $this
-     */
-    public function setImageFile(?ImageFile $imageFile): self
-    {
-        $this->imageFile = $imageFile;
-
-        return $this;
-    }
-
 }

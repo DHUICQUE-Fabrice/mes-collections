@@ -11,19 +11,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
+ * @Vich\Uploadable()
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
+class User extends ImageFile implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -67,24 +63,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
      */
     private $horseSchleiches;
 
-    /**
-     * @ORM\OneToOne(targetEntity=ImageFile::class, cascade={"persist", "remove"}, orphanRemoval="true")
-     */
-    private $imageFile;
-
     public function __construct()
     {
         $this->petshops = new ArrayCollection();
         $this->horseSchleiches = new ArrayCollection();
         $this->setRegisteredAt(new DateTime());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -322,26 +305,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function __toString()
     {
         return $this->getNickname();
-    }
-
-
-    /**
-     * @return ImageFile|null
-     */
-    public function getImageFile(): ?ImageFile
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param ImageFile|null $imageFile
-     * @return $this
-     */
-    public function setImageFile(?ImageFile $imageFile): self
-    {
-        $this->imageFile = $imageFile;
-
-        return $this;
     }
 
     /**
