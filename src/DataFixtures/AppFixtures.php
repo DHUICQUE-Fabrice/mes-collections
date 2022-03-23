@@ -26,17 +26,56 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordHasherInterface
+     */
     private UserPasswordHasherInterface $encoder;
+
+    /**
+     * @var UserRepository
+     */
     private UserRepository $userRepository;
+
+    /**
+     * @var PetshopSizeRepository
+     */
     private PetshopSizeRepository $petshopSizeRepository;
+
+    /**
+     * @var PetshopSpeciesRepository
+     */
     private PetshopSpeciesRepository $petshopSpeciesRepository;
+
+    /**
+     * @var HorseCoatRepository
+     */
     private HorseCoatRepository $horseCoatRepository;
+
+    /**
+     * @var HorseTypeRepository
+     */
     private HorseTypeRepository $horseTypeRepository;
+
+    /**
+     * @var HorseSpeciesRepository
+     */
     private HorseSpeciesRepository $horseSpeciesRepository;
+
+    /**
+     * @var ObjectFamilyRepository
+     */
     private ObjectFamilyRepository $objectFamilyRepository;
-    protected $slugger;
 
-
+    /**
+     * @param UserPasswordHasherInterface $encoder
+     * @param UserRepository $userRepository
+     * @param PetshopSizeRepository $petshopSizeRepository
+     * @param PetshopSpeciesRepository $petshopSpeciesRepository
+     * @param HorseCoatRepository $horseCoatRepository
+     * @param HorseTypeRepository $horseTypeRepository
+     * @param HorseSpeciesRepository $horseSpeciesRepository
+     * @param ObjectFamilyRepository $objectFamilyRepository
+     */
     public function __construct(UserPasswordHasherInterface $encoder,
                                 UserRepository $userRepository,
                                 PetshopSizeRepository $petshopSizeRepository,
@@ -57,6 +96,10 @@ class AppFixtures extends Fixture
         $this->objectFamilyRepository = $objectFamilyRepository;
     }
 
+    /**
+     * @param ObjectManager $manager
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -92,6 +135,11 @@ class AppFixtures extends Fixture
 
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makeUsers(Generator $faker, ObjectManager $manager){
         for ($i = 0 ; $i < 10 ; $i++){
             $user = new User();
@@ -107,6 +155,11 @@ class AppFixtures extends Fixture
 
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makePetshopSpecies(Generator $faker, ObjectManager $manager){
         for($i=0;$i<10;$i++){
             $species = new PetshopSpecies();
@@ -115,6 +168,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makePetshopSizes(Generator $faker, ObjectManager $manager){
         for($i=0;$i<4;$i++){
             $size = new PetshopSize();
@@ -123,6 +181,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makePetshops(Generator $faker, ObjectManager $manager){
         $users = $this->userRepository->findAll();
         $sizes = $this->petshopSizeRepository->findAll();
@@ -142,6 +205,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makeHorseSpecies(Generator $faker, ObjectManager $manager){
         for($i=0;$i<10;$i++){
             $species = new HorseSpecies();
@@ -150,6 +218,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makeHorseType(Generator $faker, ObjectManager $manager){
         for($i=0;$i<5;$i++){
             $type = new HorseType();
@@ -158,6 +231,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makeHorseCoat(Generator $faker, ObjectManager $manager){
         for($i=0;$i<5;$i++){
             $coat = new HorseCoat();
@@ -166,6 +244,11 @@ class AppFixtures extends Fixture
         }
     }
 
+    /**
+     * @param Generator $faker
+     * @param ObjectManager $manager
+     * @return void
+     */
     private function makeHorseSchleiches(Generator $faker, ObjectManager $manager){
         $users = $this->userRepository->findAll();
         $coats = $this->horseCoatRepository->findAll();
