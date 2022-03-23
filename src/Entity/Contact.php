@@ -17,42 +17,42 @@ class Contact
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $nickname;
+    private string $nickname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="text")
      * @var string
      */
-    private $message;
+    private string $message;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTimeInterface
      */
-    private $createdAt;
+    private DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
      * @var bool
      */
-    private $isSent;
+    private bool $isSent;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -60,7 +60,7 @@ class Contact
     /**
      * @return string
      */
-    public function getNickname()
+    public function getNickname(): string
     {
         return $this->nickname;
     }
@@ -69,7 +69,7 @@ class Contact
      * @param $nickname
      * @return $this
      */
-    public function setNickname($nickname)
+    public function setNickname($nickname): Contact
     {
         $this->nickname = $nickname;
         return $this;
@@ -78,7 +78,7 @@ class Contact
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -87,7 +87,7 @@ class Contact
      * @param $email
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail($email): Contact
     {
         $this->email = $email;
 
@@ -97,7 +97,7 @@ class Contact
     /**
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -106,7 +106,7 @@ class Contact
      * @param $message
      * @return $this
      */
-    public function setMessage($message)
+    public function setMessage($message): Contact
     {
         $this->message = $message;
 
@@ -116,7 +116,7 @@ class Contact
     /**
      * @return DateTimeInterface
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -125,7 +125,7 @@ class Contact
      * @param $createdAt
      * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt): Contact
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -134,7 +134,7 @@ class Contact
     /**
      * @return bool
      */
-    public function getIsSent()
+    public function getIsSent(): bool
     {
         return $this->isSent;
     }
@@ -143,7 +143,7 @@ class Contact
      * @param $isSent
      * @return $this
      */
-    public function setIsSent($isSent)
+    public function setIsSent($isSent): Contact
     {
         $this->isSent = $isSent;
         return $this;

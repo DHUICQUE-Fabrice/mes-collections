@@ -4,29 +4,29 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use function unserialize;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"nickname"}, message="Ce pseudo est déjà utilisé par un autre utilisateur !")
  * @Vich\Uploadable()
  */
-class User extends ImageFile implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
+class User extends ImageFile implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @var string
      */
-    private $nickname;
+    private string $nickname;
 
     /**
      * @ORM\Column(type="json")
@@ -39,37 +39,31 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @ORM\Column(type="string")
      * @var string
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
-    private $about;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var DateTimeInterface
-     */
-    private $registeredAt;
+    private string $about;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
      * @var ArrayCollection
      */
-    private $petshops;
+    private ArrayCollection $petshops;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="user")
      * @var ArrayCollection
      */
-    private $horseSchleiches;
+    private ArrayCollection $horseSchleiches;
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
@@ -81,13 +75,12 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     {
         $this->petshops = new ArrayCollection();
         $this->horseSchleiches = new ArrayCollection();
-        $this->setRegisteredAt(new DateTime());
     }
 
     /**
      * @return string
      */
-    public function getNickname()
+    public function getNickname(): string
     {
         return $this->nickname;
     }
@@ -96,7 +89,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param $nickname
      * @return $this
      */
-    public function setNickname($nickname)
+    public function setNickname($nickname): User
     {
         $this->nickname = $nickname;
         return $this;
@@ -107,7 +100,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      *
      * @see UserInterface
      */
-    public function getUserIdentifier()
+    public function getUserIdentifier(): string
     {
         return $this->nickname;
     }
@@ -115,7 +108,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->nickname;
     }
@@ -136,7 +129,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param $roles
      * @return $this
      */
-    public function setRoles($roles)
+    public function setRoles($roles): User
     {
         $this->roles = $roles;
 
@@ -156,7 +149,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param $password
      * @return $this
      */
-    public function setPassword($password)
+    public function setPassword($password): User
     {
         $this->password = $password;
 
@@ -186,7 +179,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -195,7 +188,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param $email
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail($email): User
     {
         $this->email = $email;
 
@@ -205,7 +198,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     /**
      * @return string
      */
-    public function getAbout()
+    public function getAbout(): string
     {
         return $this->about;
     }
@@ -214,7 +207,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param $about
      * @return $this
      */
-    public function setAbout($about)
+    public function setAbout($about): User
     {
         $this->about = $about;
 
@@ -222,28 +215,9 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return DateTimeInterface
-     */
-    public function getRegisteredAt()
-    {
-        return $this->registeredAt;
-    }
-
-    /**
-     * @param $registeredAt
-     * @return $this
-     */
-    public function setRegisteredAt($registeredAt)
-    {
-        $this->registeredAt = $registeredAt;
-
-        return $this;
-    }
-
-    /**
      * @return ArrayCollection
      */
-    public function getPetshops()
+    public function getPetshops(): ArrayCollection
     {
         return $this->petshops;
     }
@@ -252,7 +226,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param Petshop $petshop
      * @return $this
      */
-    public function addPetshop(Petshop $petshop)
+    public function addPetshop(Petshop $petshop): User
     {
         if (!$this->petshops->contains($petshop)) {
             $this->petshops[] = $petshop;
@@ -265,7 +239,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param Petshop $petshop
      * @return $this
      */
-    public function removePetshop(Petshop $petshop)
+    public function removePetshop(Petshop $petshop): User
     {
         if ($this->petshops->removeElement($petshop)) {
             // set the owning side to null (unless already changed)
@@ -279,7 +253,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     /**
      * @return ArrayCollection
      */
-    public function getHorseSchleiches()
+    public function getHorseSchleiches(): ArrayCollection
     {
         return $this->horseSchleiches;
     }
@@ -288,7 +262,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param HorseSchleich $horseSchleich
      * @return $this
      */
-    public function addHorseSchleich(HorseSchleich $horseSchleich)
+    public function addHorseSchleich(HorseSchleich $horseSchleich): User
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
             $this->horseSchleiches[] = $horseSchleich;
@@ -301,7 +275,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
      * @param HorseSchleich $horseSchleich
      * @return $this
      */
-    public function removeHorseSchleich(HorseSchleich $horseSchleich)
+    public function removeHorseSchleich(HorseSchleich $horseSchleich): User
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
             // set the owning side to null (unless already changed)
@@ -323,7 +297,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     /**
      * @return string|null
      */
-    public function serialize()
+    public function serialize(): ?string
     {
         return serialize([
             $this->id,
@@ -332,7 +306,6 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
             $this->password,
             $this->about,
             $this->roles,
-            $this->registeredAt,
             $this->petshops,
             $this->horseSchleiches
         ]);    }
@@ -350,10 +323,9 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
             $this->password,
             $this->about,
             $this->roles,
-            $this->registeredAt,
             $this->petshops,
             $this->horseSchleiches
-        ] = \unserialize($data, [self::class]);
+        ] = unserialize($data, [self::class]);
     }
 
     /**
@@ -371,7 +343,6 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     {
         $this->imageFile = $imageFile;
         if ($imageFile !== null)
-            $this->updatedAt = new \DateTime();
+            $this->updatedAt = new DateTime();
     }
-
 }

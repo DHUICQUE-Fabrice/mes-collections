@@ -4,9 +4,7 @@ namespace App\Entity;
 
 use App\Repository\HorseCoatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=HorseCoatRepository::class)
@@ -19,19 +17,19 @@ class HorseCoat
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="coat")
      * @var ArrayCollection
      */
-    private $horseSchleiches;
+    private ArrayCollection $horseSchleiches;
 
     public function __construct()
     {
@@ -41,7 +39,7 @@ class HorseCoat
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -49,7 +47,7 @@ class HorseCoat
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -58,7 +56,7 @@ class HorseCoat
      * @param $name
      * @return $this
      */
-    public function setName($name)
+    public function setName($name): HorseCoat
     {
         $this->name = $name;
 
@@ -68,7 +66,7 @@ class HorseCoat
     /**
      * @return ArrayCollection
      */
-    public function getHorseSchleiches()
+    public function getHorseSchleiches(): ArrayCollection
     {
         return $this->horseSchleiches;
     }
@@ -77,7 +75,7 @@ class HorseCoat
      * @param $horseSchleich
      * @return $this
      */
-    public function addHorseSchleich($horseSchleich)
+    public function addHorseSchleich($horseSchleich): HorseCoat
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
             $this->horseSchleiches[] = $horseSchleich;
@@ -90,7 +88,7 @@ class HorseCoat
      * @param $horseSchleich
      * @return $this
      */
-    public function removeHorseSchleich($horseSchleich)
+    public function removeHorseSchleich($horseSchleich): HorseCoat
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
             if ($horseSchleich->getCoat() === $this) {

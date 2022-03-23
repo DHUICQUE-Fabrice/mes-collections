@@ -2,44 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageFileRepository;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+/**
+ * TimestampableEntity()
+ */
 abstract class ImageFile
 {
+
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string|null
      */
-    protected $imageName;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var DateTimeInterface|null
-     */
-    protected $updatedAt;
-
+    protected ?string $imageName;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
-
-
 
     /**
      * @return string|null
@@ -59,24 +53,4 @@ abstract class ImageFile
 
         return $this;
     }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getUpdatedAt(): ?DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTimeInterface $updatedAt
-     * @return $this
-     */
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
 }

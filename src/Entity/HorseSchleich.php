@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\SchleichRepository;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
@@ -18,57 +17,51 @@ class HorseSchleich extends ImageFile
 {
 
     /**
-     * @ORM\Column(type="datetime")
-     * @var DateTimeInterface
-     */
-    private $createdAt;
-
-    /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
-    private $biography;
+    private string $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseType::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      * @var HorseType
      */
-    private $type;
+    private HorseType $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseCoat::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      * @var HorseCoat
      */
-    private $coat;
+    private HorseCoat $coat;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseSpecies::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      * @var HorseSpecies
      */
-    private $species;
+    private HorseSpecies $species;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
      * @var User
      */
-    private $user;
+    private User $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=ObjectFamily::class, inversedBy="horseSchleich")
      * @ORM\JoinColumn(nullable=false)
      * @var ObjectFamily
      */
-    private $objectFamily;
+    private ObjectFamily $objectFamily;
 
     /**
      * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
@@ -76,34 +69,10 @@ class HorseSchleich extends ImageFile
      */
     protected ?File $imageFile;
 
-    public function __construct()
-    {
-        $this->setCreatedAt(new DateTime());
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param $createdAt
-     * @return $this
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -112,7 +81,7 @@ class HorseSchleich extends ImageFile
      * @param $name
      * @return $this
      */
-    public function setName($name)
+    public function setName($name): HorseSchleich
     {
         $this->name = $name;
 
@@ -122,7 +91,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return string
      */
-    public function getBiography()
+    public function getBiography(): string
     {
         return $this->biography;
     }
@@ -131,7 +100,7 @@ class HorseSchleich extends ImageFile
      * @param $biography
      * @return $this
      */
-    public function setBiography($biography)
+    public function setBiography($biography): HorseSchleich
     {
         $this->biography = $biography;
 
@@ -141,7 +110,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return HorseType
      */
-    public function getType()
+    public function getType(): HorseType
     {
         return $this->type;
     }
@@ -150,7 +119,7 @@ class HorseSchleich extends ImageFile
      * @param $type
      * @return $this
      */
-    public function setType($type)
+    public function setType($type): HorseSchleich
     {
         $this->type = $type;
 
@@ -160,7 +129,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return HorseCoat
      */
-    public function getCoat()
+    public function getCoat(): HorseCoat
     {
         return $this->coat;
     }
@@ -169,7 +138,7 @@ class HorseSchleich extends ImageFile
      * @param $coat
      * @return $this
      */
-    public function setCoat($coat)
+    public function setCoat($coat): HorseSchleich
     {
         $this->coat = $coat;
 
@@ -179,7 +148,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return HorseSpecies
      */
-    public function getSpecies()
+    public function getSpecies(): HorseSpecies
     {
         return $this->species;
     }
@@ -188,7 +157,7 @@ class HorseSchleich extends ImageFile
      * @param $species
      * @return $this
      */
-    public function setSpecies($species)
+    public function setSpecies($species): HorseSchleich
     {
         $this->species = $species;
 
@@ -198,7 +167,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return (new Slugify())->slugify($this->name);
     }
@@ -206,7 +175,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -215,7 +184,7 @@ class HorseSchleich extends ImageFile
      * @param $user
      * @return $this
      */
-    public function setUser($user)
+    public function setUser($user): HorseSchleich
     {
         $this->user = $user;
 
@@ -225,7 +194,7 @@ class HorseSchleich extends ImageFile
     /**
      * @return ObjectFamily
      */
-    public function getObjectFamily()
+    public function getObjectFamily(): ObjectFamily
     {
         return $this->objectFamily;
     }
@@ -234,7 +203,7 @@ class HorseSchleich extends ImageFile
      * @param $objectFamily
      * @return $this
      */
-    public function setObjectFamily($objectFamily)
+    public function setObjectFamily($objectFamily): HorseSchleich
     {
         $this->objectFamily = $objectFamily;
 
@@ -264,7 +233,7 @@ class HorseSchleich extends ImageFile
     {
         $this->imageFile = $imageFile;
         if ($imageFile !== null)
-            $this->updatedAt = new \DateTime();
+            $this->updatedAt = new DateTime();
     }
 
 }

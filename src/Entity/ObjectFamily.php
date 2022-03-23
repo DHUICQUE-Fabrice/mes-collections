@@ -19,25 +19,25 @@ class ObjectFamily
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="objectFamily")
      * @var ArrayCollection
      */
-    private $petshop;
+    private ArrayCollection $petshop;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="objectFamily")
      * @var ArrayCollection
      */
-    private $horseSchleich;
+    private ArrayCollection $horseSchleich;
 
     public function __construct()
     {
@@ -48,7 +48,7 @@ class ObjectFamily
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -56,7 +56,7 @@ class ObjectFamily
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -65,7 +65,7 @@ class ObjectFamily
      * @param $name
      * @return $this
      */
-    public function setName($name)
+    public function setName($name): ObjectFamily
     {
         $this->name = $name;
 
@@ -75,7 +75,7 @@ class ObjectFamily
     /**
      * @return ArrayCollection
      */
-    public function getPetshop()
+    public function getPetshop(): ArrayCollection
     {
         return $this->petshop;
     }
@@ -84,7 +84,7 @@ class ObjectFamily
      * @param $petshop
      * @return $this
      */
-    public function addPetshop($petshop)
+    public function addPetshop($petshop): ObjectFamily
     {
         if (!$this->petshop->contains($petshop)) {
             $this->petshop[] = $petshop;
@@ -97,7 +97,7 @@ class ObjectFamily
      * @param $petshop
      * @return $this
      */
-    public function removePetshop($petshop)
+    public function removePetshop($petshop): ObjectFamily
     {
         if ($this->petshop->removeElement($petshop)) {
             if ($petshop->getObjectFamily() === $this) {
@@ -110,7 +110,7 @@ class ObjectFamily
     /**
      * @return ArrayCollection
      */
-    public function getHorseSchleich()
+    public function getHorseSchleich(): ArrayCollection
     {
         return $this->horseSchleich;
     }
@@ -119,7 +119,7 @@ class ObjectFamily
      * @param $horseSchleich
      * @return $this
      */
-    public function addHorseSchleich($horseSchleich)
+    public function addHorseSchleich($horseSchleich): ObjectFamily
     {
         if (!$this->horseSchleich->contains($horseSchleich)) {
             $this->horseSchleich[] = $horseSchleich;
@@ -133,7 +133,7 @@ class ObjectFamily
      * @param $horseSchleich
      * @return $this
      */
-    public function removeHorseSchleich($horseSchleich)
+    public function removeHorseSchleich($horseSchleich): ObjectFamily
     {
         if ($this->horseSchleich->removeElement($horseSchleich)) {
             if ($horseSchleich->getObjectFamily() === $this) {

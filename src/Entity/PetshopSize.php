@@ -4,9 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PetshopSizeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=PetshopSizeRepository::class)
@@ -19,19 +17,19 @@ class PetshopSize
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="size")
      * @var ArrayCollection
      */
-    private $petshops;
+    private ArrayCollection $petshops;
 
     public function __construct()
     {
@@ -41,7 +39,7 @@ class PetshopSize
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -49,7 +47,7 @@ class PetshopSize
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -58,7 +56,7 @@ class PetshopSize
      * @param $name
      * @return $this
      */
-    public function setName($name)
+    public function setName($name): PetshopSize
     {
         $this->name = $name;
 
@@ -68,7 +66,7 @@ class PetshopSize
     /**
      * @return ArrayCollection
      */
-    public function getPetshops()
+    public function getPetshops(): ArrayCollection
     {
         return $this->petshops;
     }
@@ -77,7 +75,7 @@ class PetshopSize
      * @param $petshop
      * @return $this
      */
-    public function addPetshop($petshop)
+    public function addPetshop($petshop): PetshopSize
     {
         if (!$this->petshops->contains($petshop)) {
             $this->petshops[] = $petshop;
@@ -90,7 +88,7 @@ class PetshopSize
      * @param Petshop $petshop
      * @return $this
      */
-    public function removePetshop(Petshop $petshop)
+    public function removePetshop(Petshop $petshop): PetshopSize
     {
         if ($this->petshops->removeElement($petshop)) {
             if ($petshop->getSize() === $this) {
