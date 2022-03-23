@@ -17,16 +17,19 @@ class PetshopSize
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="size")
+     * @var ArrayCollection
      */
     private $petshops;
 
@@ -35,16 +38,26 @@ class PetshopSize
         $this->petshops = new ArrayCollection();
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -53,7 +66,7 @@ class PetshopSize
     }
 
     /**
-     * @return Collection|Petshop[]
+     * @return ArrayCollection
      */
     public function getPetshops()
     {
@@ -70,7 +83,6 @@ class PetshopSize
             $this->petshops[] = $petshop;
             $petshop->setSize($this);
         }
-
         return $this;
     }
 
@@ -88,9 +100,8 @@ class PetshopSize
         return $this;
     }
 
-
     /**
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {

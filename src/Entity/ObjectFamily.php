@@ -17,21 +17,25 @@ class ObjectFamily
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="objectFamily")
+     * @var ArrayCollection
      */
     private $petshop;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="objectFamily")
+     * @var ArrayCollection
      */
     private $horseSchleich;
 
@@ -42,7 +46,7 @@ class ObjectFamily
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -50,7 +54,7 @@ class ObjectFamily
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -69,7 +73,7 @@ class ObjectFamily
     }
 
     /**
-     * @return Collection|Petshop[]
+     * @return ArrayCollection
      */
     public function getPetshop()
     {
@@ -104,7 +108,7 @@ class ObjectFamily
     }
 
     /**
-     * @return Collection|HorseSchleich[]
+     * @return ArrayCollection
      */
     public function getHorseSchleich()
     {
@@ -141,7 +145,7 @@ class ObjectFamily
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {

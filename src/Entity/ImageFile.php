@@ -8,9 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable()
- */
 abstract class ImageFile
 {
     /**
@@ -33,12 +30,6 @@ abstract class ImageFile
      */
     protected $updatedAt;
 
-    /**
-     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
-     * @var File|null
-     */
-    protected $imageFile;
-
 
     /**
      * @return int
@@ -48,23 +39,6 @@ abstract class ImageFile
         return $this->id;
     }
 
-    /**
-     * @return File|null
-     */
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param File|null $imageFile
-     */
-    public function setImageFile(?File $imageFile): void
-    {
-        $this->imageFile = $imageFile;
-        if ($imageFile !== null)
-            $this->updatedAt = new \DateTime();
-    }
 
 
     /**

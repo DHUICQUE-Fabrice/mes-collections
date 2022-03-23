@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\SchleichRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -17,53 +19,62 @@ class HorseSchleich extends ImageFile
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $picture;
-
-    /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @var string
      */
     private $biography;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseType::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
+     * @var HorseType
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseCoat::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
+     * @var HorseCoat
      */
     private $coat;
 
     /**
      * @ORM\ManyToOne(targetEntity=HorseSpecies::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
+     * @var HorseSpecies
      */
     private $species;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="horseSchleiches")
      * @ORM\JoinColumn(nullable=false)
+     * @var User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=ObjectFamily::class, inversedBy="horseSchleich")
      * @ORM\JoinColumn(nullable=false)
+     * @var ObjectFamily
      */
     private $objectFamily;
+
+    /**
+     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
+     * @var File|null
+     */
+    protected ?File $imageFile;
 
     public function __construct()
     {
@@ -71,7 +82,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return DateTimeInterface
      */
     public function getCreatedAt()
     {
@@ -90,26 +101,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
-     */
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
-    /**
-     * @param $picture
-     * @return $this
-     */
-    public function setPicture($picture)
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -128,7 +120,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getBiography()
     {
@@ -147,7 +139,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return HorseType
      */
     public function getType()
     {
@@ -166,7 +158,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return HorseCoat
      */
     public function getCoat()
     {
@@ -185,7 +177,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return HorseSpecies
      */
     public function getSpecies()
     {
@@ -203,7 +195,6 @@ class HorseSchleich extends ImageFile
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -213,7 +204,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getUser()
     {
@@ -232,7 +223,7 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return ObjectFamily
      */
     public function getObjectFamily()
     {
@@ -251,10 +242,29 @@ class HorseSchleich extends ImageFile
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {
         return $this->getName();
     }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile !== null)
+            $this->updatedAt = new \DateTime();
+    }
+
 }

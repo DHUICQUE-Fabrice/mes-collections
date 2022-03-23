@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
@@ -23,45 +24,58 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @var string
      */
     private $nickname;
 
     /**
      * @ORM\Column(type="json")
+     * @var ArrayCollection
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @var string
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Ignore
+     * @var string
      */
     private $about;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $registeredAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Petshop::class, mappedBy="user")
+     * @var ArrayCollection
      */
     private $petshops;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="user")
+     * @var ArrayCollection
      */
     private $horseSchleiches;
+
+    /**
+     * @Vich\UploadableField(mapping="uploaded_images", fileNameProperty="imageName")
+     * @var File|null
+     */
+    protected ?File $imageFile;
 
     public function __construct()
     {
@@ -71,7 +85,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNickname()
     {
@@ -170,7 +184,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEmail()
     {
@@ -189,7 +203,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAbout()
     {
@@ -208,7 +222,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return mixed
+     * @return DateTimeInterface
      */
     public function getRegisteredAt()
     {
@@ -227,7 +241,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return Collection|Petshop[]
+     * @return ArrayCollection
      */
     public function getPetshops()
     {
@@ -235,10 +249,10 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @param $petshop
+     * @param Petshop $petshop
      * @return $this
      */
-    public function addPetshop($petshop)
+    public function addPetshop(Petshop $petshop)
     {
         if (!$this->petshops->contains($petshop)) {
             $this->petshops[] = $petshop;
@@ -248,10 +262,10 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @param $petshop
+     * @param Petshop $petshop
      * @return $this
      */
-    public function removePetshop($petshop)
+    public function removePetshop(Petshop $petshop)
     {
         if ($this->petshops->removeElement($petshop)) {
             // set the owning side to null (unless already changed)
@@ -263,7 +277,7 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @return Collection|HorseSchleich[]
+     * @return ArrayCollection
      */
     public function getHorseSchleiches()
     {
@@ -271,10 +285,10 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @param $horseSchleich
+     * @param HorseSchleich $horseSchleich
      * @return $this
      */
-    public function addHorseSchleich($horseSchleich)
+    public function addHorseSchleich(HorseSchleich $horseSchleich)
     {
         if (!$this->horseSchleiches->contains($horseSchleich)) {
             $this->horseSchleiches[] = $horseSchleich;
@@ -284,10 +298,10 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
     }
 
     /**
-     * @param $horseSchleich
+     * @param HorseSchleich $horseSchleich
      * @return $this
      */
-    public function removeHorseSchleich($horseSchleich)
+    public function removeHorseSchleich(HorseSchleich $horseSchleich)
     {
         if ($this->horseSchleiches->removeElement($horseSchleich)) {
             // set the owning side to null (unless already changed)
@@ -297,7 +311,6 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
         }
         return $this;
     }
-
 
     /**
      * @return mixed
@@ -340,5 +353,25 @@ class User extends ImageFile implements UserInterface, PasswordAuthenticatedUser
             $this->registeredAt,
             $this->petshops,
             $this->horseSchleiches
-        ] = \unserialize($data, [self::class]);    }
+        ] = \unserialize($data, [self::class]);
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile !== null)
+            $this->updatedAt = new \DateTime();
+    }
+
 }

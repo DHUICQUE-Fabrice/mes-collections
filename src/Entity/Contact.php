@@ -15,36 +15,42 @@ class Contact
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $nickname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="text")
+     * @var string
      */
     private $message;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool
      */
     private $isSent;
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -52,7 +58,7 @@ class Contact
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNickname()
     {
@@ -70,7 +76,7 @@ class Contact
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEmail()
     {
@@ -89,7 +95,7 @@ class Contact
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMessage()
     {
@@ -108,7 +114,7 @@ class Contact
     }
 
     /**
-     * @return mixed
+     * @return DateTimeInterface
      */
     public function getCreatedAt()
     {
@@ -126,7 +132,7 @@ class Contact
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getIsSent()
     {

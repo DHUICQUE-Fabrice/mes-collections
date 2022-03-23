@@ -17,16 +17,19 @@ class HorseType
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
-    private  $name;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=HorseSchleich::class, mappedBy="type")
+     * @var ArrayCollection
      */
     private $horseSchleiches;
 
@@ -36,7 +39,7 @@ class HorseType
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -44,7 +47,7 @@ class HorseType
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -63,7 +66,7 @@ class HorseType
     }
 
     /**
-     * @return Collection|HorseSchleich[]
+     * @return ArrayCollection
      */
     public function getHorseSchleiches()
     {
@@ -99,7 +102,7 @@ class HorseType
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {
