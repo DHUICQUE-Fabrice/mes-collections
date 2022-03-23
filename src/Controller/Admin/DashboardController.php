@@ -20,8 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
+
+
     /**
      * @Route("/admin", name="admin")
+     * @return Response
      */
     public function index(): Response
     {
@@ -30,12 +33,18 @@ class DashboardController extends AbstractDashboardController
 
     }
 
+    /**
+     * @return Dashboard
+     */
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
             ->setTitle('Mes Collections');
     }
 
+    /**
+     * @return iterable
+     */
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
@@ -58,8 +67,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Users', 'fas fa-users');
         yield MenuItem::linkToCrud('Registered Users', null, User::class);
         yield MenuItem::linkToCrud('Image Files', null, ImageFile::class);
-
-
-
     }
 }

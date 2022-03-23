@@ -12,12 +12,19 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class ImageFileCrudController extends AbstractCrudController
 {
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return ImageFile::class;
     }
 
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

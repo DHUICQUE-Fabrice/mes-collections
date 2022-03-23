@@ -17,16 +17,19 @@ abstract class ImageFile
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string|null
      */
     protected $imageName;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface|null
      */
     protected $updatedAt;
 
@@ -36,8 +39,9 @@ abstract class ImageFile
      */
     protected $imageFile;
 
+
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {

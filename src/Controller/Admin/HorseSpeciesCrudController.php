@@ -7,6 +7,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class HorseSpeciesCrudController extends AbstractCrudController
 {
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return HorseSpecies::class;

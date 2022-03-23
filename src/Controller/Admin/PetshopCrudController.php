@@ -15,12 +15,19 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PetshopCrudController extends AbstractCrudController
 {
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Petshop::class;
     }
 
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

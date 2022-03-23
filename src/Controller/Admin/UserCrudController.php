@@ -19,12 +19,19 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class UserCrudController extends AbstractCrudController
 {
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return User::class;
     }
 
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -41,7 +48,10 @@ class UserCrudController extends AbstractCrudController
         ];
     }
 
-
+    /**
+     * @param Crud $crud
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud->setDefaultSort(['registeredAt' => 'DESC']);

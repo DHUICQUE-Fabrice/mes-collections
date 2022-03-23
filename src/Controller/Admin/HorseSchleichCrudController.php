@@ -15,11 +15,18 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class HorseSchleichCrudController extends AbstractCrudController
 {
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return HorseSchleich::class;
     }
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -35,6 +42,10 @@ class HorseSchleichCrudController extends AbstractCrudController
         ];
     }
 
+    /**
+     * @param Crud $crud
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud->setDefaultSort(['createdAt' => 'DESC']);
