@@ -11,8 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SitemapController extends AbstractController
 {
+
     /**
      * @Route("/sitemap.xml", name="sitemap", defaults={"_format"="xml"})
+     * @param Request $request
+     * @param PetshopRepository $petshopRepository
+     * @param HorseSchleichRepository $horseSchleichRepository
+     * @return Response
      */
     public function index(Request $request, PetshopRepository $petshopRepository, HorseSchleichRepository $horseSchleichRepository): Response
     {

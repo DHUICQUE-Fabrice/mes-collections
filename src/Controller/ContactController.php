@@ -12,8 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController
 {
+
     /**
      * @Route("/contact", name="contact")
+     * @param Request $request
+     * @param ContactService $contactService
+     * @return Response
      */
     public function index(Request $request, ContactService $contactService): Response
     {

@@ -6,11 +6,8 @@ use App\Form\UserType;
 use App\Repository\HorseSchleichRepository;
 use App\Repository\PetshopRepository;
 use App\Repository\UserRepository;
-use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
-use League\Flysystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,15 +16,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
+
     /**
      * @Route("/profil/{nickname}", name="profile")
+     * @param string $nickname
+     * @param UserRepository $userRepository
+     * @param PetshopRepository $petshopRepository
+     * @param HorseSchleichRepository $horseSchleichRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
      */
-    public function profile(string $nickname,
-                            UserRepository $userRepository,
-                            PetshopRepository $petshopRepository,
+    public function profile(string                  $nickname,
+                            UserRepository          $userRepository,
+                            PetshopRepository       $petshopRepository,
                             HorseSchleichRepository $horseSchleichRepository,
-                            PaginatorInterface $paginator,
-                            Request $request
+                            PaginatorInterface      $paginator,
+                            Request                 $request
                             ): Response
     {
 
@@ -48,13 +53,20 @@ class UserController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/profil/{nickname}/modifier", name="editProfile")
+     * @param string $nickname
+     * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editProfile(string $nickname,
-                                UserRepository $userRepository,
-                                EntityManagerInterface $entityManager,
-                                Request $request,
+    public function editProfile(string                      $nickname,
+                                UserRepository              $userRepository,
+                                EntityManagerInterface      $entityManager,
+                                Request                     $request,
                                 UserPasswordHasherInterface $userPasswordHasher){
         $user = $userRepository->findOneBy(['nickname' => $nickname]);
         $userChecked = $this->getUser();
